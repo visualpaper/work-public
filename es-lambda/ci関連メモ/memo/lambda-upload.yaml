@@ -1,0 +1,117 @@
+﻿
+[コメント有り]
+☆ 外部から設定する場合は !Ref らしいので検証予定
+{
+  // テンプレートのバージョン(これを更新していく?)
+  "AWSTemplateFormatVersion" : "2010-09-09",
+
+  // croudformation stack の description
+  "Description" : "sample of cloudformation template for deploying a lambda function form S3.",
+
+  // 実施する内容スタート
+  "Resources" : {
+
+    // 名称
+    "HelloSample2": {
+
+      // Lambda に対して
+      "Type": "AWS::Lambda::Function",
+
+      // 必要な情報設定
+      "Properties": {
+
+        // 実行 python ファイル名.ハンドラ名
+        "Handler": "sample.lambda_handler",
+
+        // 設定するロールを設定
+        // ※ Fn::GetAtt は croudformation の組み込み関数となる。ここでは下に書いているロールを設定するという意味を持っている
+        // 参考: http://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-getatt.html
+        "Role": { "Fn::GetAtt" : ["LambdaExecutionRole", "Arn"] },
+
+        // デプロイする zip ファイルの s3 bucket 名及びファイル名
+        "Code": {
+          "S3Bucket": "sample-es-labda-bucket",
+          "S3Key": "sample.zip"
+        },
+
+        // lambda ランタイム
+        "Runtime": "python3.6",
+
+        // タイムアウト時間
+        "Timeout": "25"
+      }
+    },
+
+    // 上に書いてあるロールの設定情報
+    "LambdaExecutionRole": {
+
+      // IAM Role に対して
+      "Type": "AWS::IAM::Role",
+
+      // 必要な情報設定
+      "Properties": {
+
+        // ロールの信頼関係を設定する。
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "lambda.amazonaws.com"
+                ]
+              },
+              "Action": [
+                "sts:AssumeRole"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}
+
+
+[コメント無し]
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+  "Description" : "sample of cloudformation template for deploying a lambda function form S3.",
+  "Resources" : {
+    "HelloSample2": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Handler": "sample.lambda_handler",
+        "Role": { "Fn::GetAtt" : ["LambdaExecutionRole2", "Arn"] },
+        "Code": {
+          "S3Bucket": "sample-es-labda-bucket",
+          "S3Key": "sample2.zip"
+        },
+        "Runtime": "python3.6",
+        "Timeout": "50"
+      }
+    },
+    "LambdaExecutionRole2": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "lambda.amazonaws.com"
+                ]
+              },
+              "Action": [
+                "sts:AssumeRole"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

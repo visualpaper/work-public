@@ -1,0 +1,75 @@
+
+【手動】
+※ 前提として、elasticSearch の構築が完了していること。(ES になんらかの IAM Role が設定されている状態)
+1. Lambda 用 IAM Role 作成
+   ・ 以下のポリシーを持つこと(http://docs.aws.amazon.com/ja_jp/lambda/latest/dg/policy-templates.html#basic-execution) 
+      - 基本的な Lambda のアクセス権限
+      - Elasticsearch のアクセス権限
+
+2. Lambda 関数作成
+   ・ 設定は以下
+      - ランタイム: python3.6
+      - ロール: 「1」で作成した IAM Role
+      - 環境変数: 削除関連
+      - タイムアウト: 5 分
+
+   ※ zip をアップロードする
+
+3. ES に「1」で作成した IAM Role の ARN を追加する。
+
+4. ClowdWatchEvent を作成する
+   ・ 設定は以下
+      - スケジュール式: 12 時間ごと
+      - ターケッド: 「1」で作成した lambda
+
+
+【CloudFormation (1 で作成する部分のみ)】
+0. AWS CLI を用意
+   - インストール
+     > pip install awscli --upgrade --user
+   - config 設定
+     > aws configure
+       AWS Access Key ID [None]: AKIAIOSFODNN7EXAMPLE
+       AWS Secret Access Key [None]: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+       Default region name [None]: ap-northeast-1
+       Default output format [None]: json
+     ※ AdministratorAccess ポリシーを持つユーザで問題ないと思われる。
+        それでなければ、yaml で指定する各処理を実行する権限を持つユーザを用意する必要がある。
+
+1. Lambda 用 IAM Role 作成
+   ・ 以下のポリシーを持つこと(http://docs.aws.amazon.com/ja_jp/lambda/latest/dg/policy-templates.html#basic-execution) 
+      - 基本的な Lambda のアクセス権限
+      - Elasticsearch のアクセス権限
+
+2. s3 に lambda zip ファイルをアップロード
+   ☆ ここは手動なのか確認
+   ☆ s3 bucket を一時的に使用するだけなので、それが良いのか確認
+
+3. Lambda 関数作成
+   > テンプレートファイルは別紙
+   ☆ Lambda に設定する情報(IAM Role, タイムアウト, 環境変数) の設定方法は勉強中
+   ☆ 既存 Role の設定方法は勉強中。既存ではなく新規であれば以下が参考になりそう
+      (https://serverlesscode.com/post/cloudformation-deploy-lambda-resources/)
+
+   aws cli にて以下のコマンド実施
+   > aws cloudformation create-stack --region ap-northeast-1 --stack-name sample-create-stack --capabilities CAPABILITY_IAM --template-body file:///home/visualpaper/temp/sample-lambda-cloudformation/sample-cli-croudformation.yaml
+   ※ iam role を作成するので CAPABILITY_IAM をつける必要がある。
+
+   ※ 更新する場合は以下
+  (テンプレートに変化がある部分のみを更新するので、おそらく s3 key として記載している lambda zip ファイル名を都度更新してアップロードしていると思われる)
+   > aws cloudformation update-stack --region ap-northeast-1 --stack-name sample-create-stack --capabilities CAPABILITY_IAM --template-body file:///home/visualpaper/temp/sample-lambda-cloudformation/sample-cli-croudformation.yaml
+
+   ※ 結果確認する場合は以下
+   > aws cloudformation describe-stacks --stack-name "sample-create-stack"
+   (StackStatus だけ見る方法も有りそう)
+
+   ☆ croudformation stack ができあがるのは良いか不明
+   ⇒ 確認
+
+
+3. ES に「1」で作成した IAM Role の ARN を追加する。
+
+4. ClowdWatchEvent を作成する
+   ・ 設定は以下
+      - スケジュール式: 12 時間ごと
+      - ターケッド: 「1」で作成した lambda

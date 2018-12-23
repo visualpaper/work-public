@@ -1,0 +1,91 @@
+
+0. AWS CLI を用意
+   - インストール
+     > pip install awscli --upgrade --user
+   - config 設定
+     > aws configure
+       AWS Access Key ID [None]: AKIAIOSFODNN7EXAMPLE
+       AWS Secret Access Key [None]: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+       Default region name [None]: ap-northeast-1
+       Default output format [None]: json
+     ※ AdministratorAccess ポリシーを持つユーザで問題ないと思われる。
+        それでなければ、yaml で指定する各処理を実行する権限を持つユーザを用意する必要がある。
+
+1. Lambda 用 IAM Role 作成
+   ・ 以下のポリシーを持つこと(http://docs.aws.amazon.com/ja_jp/lambda/latest/dg/policy-templates.html#basic-execution) 
+      - 基本的な Lambda のアクセス権限
+      - Elasticsearch のアクセス権限
+
+2. lambda-uploder を用意
+   - インストール
+     > pip install lambda-uploader
+
+   - 確認
+     > sudo lambda-uploader --version
+     ⇒ version が出れば OK
+
+3. lambda.json 作成
+{
+  "name": "sample-es-access-lambda-uploder",
+  "description": "sample-es-access-lambda-uploder",
+  "region": "us-west-2",
+  "handler": "sample_es_access.lambda_handler",
+  "role": "arn:aws:iam::12345678:role/service-role/sample-lambda-role",
+  "requirements": ["boto"],
+  "runtime": "python 3.6",
+  "timeout": 300,
+  "memory": 128
+}
+
+[詳細]
+{
+  # lambda 関数名
+  "name": "sample-es-access-lambda-uploder",
+
+  # lambda 関数 description
+  "description": "lambda-uploader w/ 3rd party packages",
+
+  # region
+  "region": "us-west-2",
+
+  # handler 名
+  "handler": "sample_es_access.lambda_handler",
+
+  # lambda に設定する IAM ロール (「1」で作成した IAM ロールの ARM 指定)
+  "role": "arn:aws:iam::1234567890:role/service-role/sample-lambda-role",
+
+  # 必要な外部参照ライブラリ
+  "requirements": ["boto"],
+
+  # lambda 関数ランタイム
+  "runtime": "python 3.6",
+
+  # lambda 関数タイムアウト秒
+  "timeout": 300,
+
+  # lambda 関数メモリ
+  "memory": 128
+}
+
+4. upload
+   > sudo lambda-uploader --variables '{
+       "DELETE_DAY": "7",
+       "ES_HOST": "search-sample-es-tldmm3wmlruf4ucj6nnn24htmm.us-west-2.es.amazonaws.com",
+       "DELETE_HOUR": "0",
+       "ES_REGION": "us-west-2",
+       "DELETE_COUNT": "100"
+     }'
+
+⇒ 以下のログが出れば OK
+  λ Building Package
+  λ Uploading Package
+  λ Fin
+
+
+
+[メモ]
+--no-upload オプションをつけると、ZIP 化までの処理を行い、AWS Lambda へのアップロードは行いません。
+--no-clean オプションをつけると、作業ディレクトリを削除しません。
+
+現時点では、lambda のランタイム指定が「python 2.7」までになっている。
+そのため、最悪 build だけ実施して手作業でデプロイでも良いと思う。

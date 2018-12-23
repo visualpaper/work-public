@@ -1,0 +1,70 @@
+
+
+[ES]
+・ 特定IPから許可して index type mapping 作成
+curl -XPUT 'search-sample-es-tldmm3wmlruf4ucj6nnn24htmm.us-west-2.es.amazonaws.com/sample-index/'
+curl -XPUT 'search-sample-es-tldmm3wmlruf4ucj6nnn24htmm.us-west-2.es.amazonaws.com/sample-index/sample-type/_mapping' -d '
+{
+  "properties" : {
+    "author" : {
+      "type" : "string"
+    },
+    "timestamp" : {
+      "type" : "date"
+    }
+  }
+}'
+
+・ データ登録
+curl -XPUT 'search-sample-es-tldmm3wmlruf4ucj6nnn24htmm.us-west-2.es.amazonaws.com/sample-index/sample-type/1' -d '
+{
+    "author": "author1",
+    "timestamp": "2017-08-06T10:00:00Z"
+}'
+
+curl -XPUT 'search-sample-es-tldmm3wmlruf4ucj6nnn24htmm.us-west-2.es.amazonaws.com/sample-index/sample-type/2' -d '
+{
+    "author": "author1",
+    "timestamp": "2017-08-07T10:00:00Z"
+}'
+
+curl -XPUT 'search-sample-es-tldmm3wmlruf4ucj6nnn24htmm.us-west-2.es.amazonaws.com/sample-index/sample-type/3' -d '
+{
+    "author": "author1",
+    "timestamp": "2017-08-07T11:00:00Z"
+}'
+
+・ データ確認
+curl -XPOST search-sample-es-tldmm3wmlruf4ucj6nnn24htmm.us-west-2.es.amazonaws.com/sample-index/_search
+GET /sample-index/_search
+{
+  "from": 0,
+  "size": 100,
+  "query": {
+    "range": {
+      "timestamp": {
+        "lt": "2017-08-07T11:00:00"
+      }
+    }
+  }
+}
+
+・ データ削除
+POST /sample-index/_delete_by_query
+{
+  "size": 100,
+  "query": {
+    "range": {
+      "timestamp": {
+        "lt": "2017-08-07T11:00:00"
+      }
+    }
+  }
+}
+※ from はサポートしてないとのこと
+
+
+[Lambda]
+作業ディレクトリ用意してライブラリ入れてzipに固める
+sudo pip install boto -t .
+zip -r upload.zip *
