@@ -1,17 +1,9 @@
 
-public interface BinaryTransferResponseHeader {
-
-
-  @Nonnull
-  ResponseBuilder applyTo(@Nonnull ResponseBuilder builder);
+// abcd
+// abcd
+public interface ResponseHeader {
 
   @Nonnull
-  default ResponseModifier convert() {
-    return builder -> header.applyTo(builder).build();
-  }
+  MultiValueMap<String, Object> toMap();
 
-  @Nonnull
-  default ResponseModifier compose(@Nonnull ResponseModifier responseModifier) {
-    return builder -> responseModifier.modify(applyTo(builder));
-  }
 }
