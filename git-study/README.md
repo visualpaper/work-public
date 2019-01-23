@@ -71,3 +71,17 @@ push したい branch に force push
 
 git push -f origin HEAD:feature/git-study-6
 ```
+
+
+・ squash to merge
+```
+1. master ⇒ develop
+2. develop ⇒ feature/xxx
+   2.1. コミットA
+   2.2. コミットB
+3. ↑マージ
+4. develop ⇒ deature/yyy
+   4.1. コミットC
+   4.2. コミットD
+
+```
