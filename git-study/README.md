@@ -72,7 +72,6 @@ push したい branch に force push
 git push -f origin HEAD:feature/git-study-6
 ```
 
-
 ・ squash to merge
 ```
 1. master ⇒ develop
@@ -83,5 +82,77 @@ git push -f origin HEAD:feature/git-study-6
 4. develop ⇒ deature/yyy
    4.1. コミットC
    4.2. コミットD
+5. develop ⇒ oneoff/zzz
+6. git log --oneline
 
+> 0c55a68 (HEAD -> oneoff/git-study-squash, origin/oneoff/git-study-squash, origin/develop) Merge pull request #10 from visualpaper/feature/git-study-2
+> 31fb8a8 (origin/feature/git-study-2, feature/git-study-2) コミットD
+> eed74a8 コミットC
+> 091b7b1 Merge pull request #9 from visualpaper/feature/git-study-1
+> ad180cd (origin/feature/git-study-1, feature/git-study-1) コミットB
+> d9e0f20 コミットA
+> 28476c6 (origin/master) Merge pull request #8 from visualpaper/feature/1_docker_install
+> bd58f05 (origin/feature/1_docker_install, feature/1_docker_install) 1: docker 入門(STEP1まで)
+> 7c82ec0 (master) Update README.md
+
+8. git rebase -i 28476c6
+※ まとめたいコミットの一つ手前からである点に注意
+※ ここから先は i で編集、:wq! で上書き (OK)
+
+> pick d9e0f20 コミットA
+> pick ad180cd コミットB
+> pick eed74a8 コミットC
+> pick 31fb8a8 コミットD
+
+↓
+
+> r d9e0f20 コミットA
+> s ad180cd コミットB
+> s eed74a8 コミットC
+> s 31fb8a8 コミットD
+
+9. :wq! で上書きすると、新しいコミットコメント設定
+
+> コミットA
+> 
+> # Please enter the commit message for your changes. Lines starting
+> # with '#' will be ignored, and an empty message aborts the commit.
+
+↓
+
+> version up
+> 
+> # Please enter the commit message for your changes. Lines starting
+> # with '#' will be ignored, and an empty message aborts the commit.
+
+10. :wq! で上書きすると、最後に確認
+
+> # This is a combination of 4 commits.
+> # This is the 1st commit message:
+> 
+> version up
+> 
+> # This is the commit message #2:
+> 
+> コミットB
+> 
+> # This is the commit message #3:
+> 
+> コミットC
+> 
+> # This is the commit message #4:
+> 
+> コミットD
+> 
+> # Please enter the commit message for your changes. Lines starting
+> # with '#' will be ignored, and an empty message aborts the commit.
+> #
+
+11. :wq! しておしまい。
+
+12. git push -f
+
+13. oneoff/xxx to master
+
+14. master to develop
 ```
