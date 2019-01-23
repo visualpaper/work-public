@@ -82,5 +82,6 @@ git push -f origin HEAD:feature/git-study-6
 3. ↑マージ
 4. develop ⇒ deature/yyy
    4.1. コミットC
+   4.2. コミットD
 
 ```
