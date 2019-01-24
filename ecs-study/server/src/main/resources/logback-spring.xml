@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+  <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+
+  <!-- プロパティ application.yaml にて指定可能 -->
+  <property name="LOG_PATH" value="${LOG_PATH:-/home/ecs-server}" />
+
+  <!-- アプリケーション情報ログ -->
+  <appender name="APPLICATION_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${LOG_PATH}/ecs-server-app.log</file>
+    <encoder>
+      <!-- レイアウトは yyyy-mm-dd HH:mm:ss:SSS ${%5LOG_LEVEL} ${PID} ${LOG_CODE} ${MESSAGE} -->
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${PID:- } %m%n%nopex</pattern>
+    </encoder>
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <fileNamePattern>${LOG_PATH}/ecs-server-app.log.%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
+      <maxFileSize>${LOG_FILE_MAX_SIZE:-10MB}</maxFileSize>
+      <maxHistory>${LOG_FILE_MAX_HISTORY:-0}</maxHistory>
+    </rollingPolicy>
+  </appender>
+
+  <!-- システム情報含むダンプログ -->
+  <appender name="DUMP_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${LOG_PATH}/ecs-server-dump.log</file>
+    <encoder>
+      <pattern>${FILE_LOG_PATTERN}</pattern>
+    </encoder>
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <fileNamePattern>${LOG_PATH}/ecs-server-dump.log.%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
+      <maxFileSize>${LOG_FILE_MAX_SIZE:-10MB}</maxFileSize>
+      <maxHistory>${LOG_FILE_MAX_HISTORY:-0}</maxHistory>
+    </rollingPolicy>
+  </appender>
+
+  <!-- INFO 以降のログは全て出力する。 -->
+  <root level="INFO">
+    <appender-ref ref="DUMP_LOG" />
+  </root>
+
+  <!-- APPLICATION_LOG は WARN 以上とし、監視用として用いる -->
+  <logger name="com.work.esc.server.simulator" level="WARN" additivity="false">
+    <appender-ref ref="APPLICATION_LOG" />
+  </logger>
+
+  <!-- INFO_LOG のみコンソールに表示する。※ DUMP_LOG へも伝搬させる。 -->
+  <logger name="INFO_LOG" level="DEBUG" additivity="true">
+    <appender-ref ref="CONSOLE" />
+  </logger>
+
+</configuration>
