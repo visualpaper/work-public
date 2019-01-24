@@ -1,0 +1,13 @@
+spring:
+  profiles.active: dev
+
+---
+spring:
+  profiles: dev
+
+logging:
+  path: /home/ecs-server
+
+---
+spring:
+  profiles: unit
