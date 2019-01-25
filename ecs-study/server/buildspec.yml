@@ -1,0 +1,13 @@
+version: 0.1
+
+phases:
+  install:
+    commands:
+      - gradle -v
+  build:
+    commands:
+      - gradle build -x test
+
+artifacts:
+  files:
+    - ./build/libs/esc-server-0.0.1-SNAPSHOT.jar
