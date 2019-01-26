@@ -4,6 +4,7 @@ phases:
   install:
     commands:
       - gradle -v
+
   build:
     commands:
       - gradle build -x test
