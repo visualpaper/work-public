@@ -1,15 +1,12 @@
-version: 0.1
+version: 0.2
 
 phases:
-  install:
-    commands:
-      - gradle -v
-
   build:
     commands:
-      - gradle build -x test
+      - mvn install
 
 artifacts:
   type: zip
   files:
-    - ./build/libs/esc-server-0.0.1-SNAPSHOT.jar
+    - ./target/ecs-system.war
+  discard-paths: yes

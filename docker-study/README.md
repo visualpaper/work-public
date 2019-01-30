@@ -86,7 +86,9 @@ docker build [ -t oƒCƒ[ƒW–¼p [ :oƒ^ƒO–¼p ] ] oDockerfile‚Ì‚ ‚éƒfƒBƒŒƒNƒgƒ
 * ƒCƒ[ƒW‚Ìæ“¾
 docker pull ƒCƒ[ƒW–¼[:ƒ^ƒO|@ƒCƒ[ƒW‚ÌƒnƒbƒVƒ…’l]
 —á: docker pull debian:jessie
-—á(ECR): docker pull 683640743654.dkr.ecr.ap-northeast-1.amazonaws.com/umejima-sample-ecr:latest
+—á(ECR):
+$(aws ecr get-login --region ap-northeast-1 --no-include-email)
+docker pull 683640743654.dkr.ecr.ap-northeast-1.amazonaws.com/umejima-sample-ecr:latest
 
 ### ‹N“®Œn
 * ƒRƒ“ƒeƒi‚Ì‹N“®
@@ -101,6 +103,9 @@ docker run [ƒCƒ[ƒWID]
 
   —á: ‹N“®‚µ‚½‚Ü‚Ü‚É‚·‚é
   docker run -itd <ƒCƒ[ƒWID>
+
+### Ä‹N“®
+docker restart <ƒRƒ“ƒeƒiID>
 
 ### ’â~Œn
 * ƒRƒ“ƒeƒi‚Ì’â~
