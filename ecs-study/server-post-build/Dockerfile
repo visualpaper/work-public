@@ -1,3 +1,3 @@
-FROM maven:3.3.9-jdk-8
- 
-RUN echo "Hello World"
+FROM tomcat:8.0.20-jre8
+
+ADD ./ecs-system.war /usr/local/tomcat/webapps/

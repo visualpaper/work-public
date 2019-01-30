@@ -12,7 +12,7 @@ class Sample extends React.Component {
 		return fetch(AppConfig.url + "/ecs-server", {
 			method: 'GET',
 			headers: {
-				'Access-Control-Allow-Origin': '*'
+				'Content-Type': "application/json"
 			}
 		})
 			.then(response => response.json())
