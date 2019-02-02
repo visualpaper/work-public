@@ -65,6 +65,10 @@ docker info
 
 ```
 # チートシート
+## 便利
+apt-get update
+apt-get install vim
+
 ## Docker
 sudo service docker start
 

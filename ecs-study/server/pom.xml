@@ -8,7 +8,7 @@
 
   <packaging>war</packaging>
 
-  <name>ecs-system</name>
+  <name>server</name>
 
   <build>
     <finalName>ecs-system</finalName>
