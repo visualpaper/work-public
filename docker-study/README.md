@@ -108,6 +108,9 @@ docker run [イメージID]
   例: 起動したままにする
   docker run -itd <イメージID>
 
+  例: host の iptable を利用する
+  docker run -itd --net=host <イメージID>
+
 ### 再起動
 docker restart <コンテナID>
 
