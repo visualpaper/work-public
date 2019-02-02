@@ -9,10 +9,10 @@ class Sample extends React.Component {
 	}
 
 	fetchMethod() {
-		return fetch(AppConfig.url + "/ecs-server", {
+		return fetch(AppConfig.url + "/app/ecs-server", {
 			method: 'GET',
 			headers: {
-				'Access-Control-Allow-Origin': '*'
+				'Content-Type': "application/json"
 			}
 		})
 			.then(response => response.json())

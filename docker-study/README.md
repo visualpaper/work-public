@@ -65,6 +65,10 @@ docker info
 
 ```
 # ƒ`[ƒgƒV[ƒg
+## •Ö—˜
+apt-get update
+apt-get install vim
+
 ## Docker
 sudo service docker start
 
@@ -86,6 +90,9 @@ docker build [ -t oƒCƒ[ƒW–¼p [ :oƒ^ƒO–¼p ] ] oDockerfile‚Ì‚ ‚éƒfƒBƒŒƒNƒgƒ
 * ƒCƒ[ƒW‚Ìæ“¾
 docker pull ƒCƒ[ƒW–¼[:ƒ^ƒO|@ƒCƒ[ƒW‚ÌƒnƒbƒVƒ…’l]
 —á: docker pull debian:jessie
+—á(ECR):
+$(aws ecr get-login --region ap-northeast-1 --no-include-email)
+docker pull 683640743654.dkr.ecr.ap-northeast-1.amazonaws.com/umejima-sample-ecr:latest
 
 ### ‹N“®Œn
 * ƒRƒ“ƒeƒi‚Ì‹N“®
@@ -93,10 +100,19 @@ docker run [ƒCƒ[ƒWID]
 ¦ ‘¶İ‚µ‚È‚¢ê‡ADockerHUB ‚©‚ç PULL ‚·‚é‚Á‚Û‚¢H
 
   —á: ƒ}ƒVƒ“‚Ìƒ|[ƒg4000‚ğƒRƒ“ƒeƒi‚ÌŒöŠJƒ|[ƒg80‚Éƒ}ƒbƒsƒ“ƒO‚µ‚ÄAƒAƒvƒŠ‚ğÀs
-  docker run -p 4000:80 friendlyhello
+  docker run -p 4000:80 <ƒCƒ[ƒWID>
 
   —á: ª‚ğƒoƒbƒNƒOƒ‰ƒEƒ“ƒh‚Åƒfƒ^ƒbƒ`ƒ‚[ƒh‚ÅÀs
-  docker run -d -p 4000:80 friendlyhello
+  docker run -d -p 4000:80 <ƒCƒ[ƒWID>
+
+  —á: ‹N“®‚µ‚½‚Ü‚Ü‚É‚·‚é
+  docker run -itd <ƒCƒ[ƒWID>
+
+  —á: host ‚Ì iptable ‚ğ—˜—p‚·‚é
+  docker run -itd --net=host <ƒCƒ[ƒWID>
+
+### Ä‹N“®
+docker restart <ƒRƒ“ƒeƒiID>
 
 ### ’â~Œn
 * ƒRƒ“ƒeƒi‚Ì’â~
@@ -110,6 +126,9 @@ docker rm [ƒRƒ“ƒeƒiID] [ƒRƒ“ƒeƒiID] ...
 * ƒCƒ[ƒW‚Ìíœ
 docker rmi [ƒCƒ[ƒWID]
 
+### ƒRƒ“ƒeƒi‚É“ü‚é
+docker exec -it <ƒCƒ[ƒWID> bach
+¦ bash ‚Æ‚© sh ‚Æ‚©‚Å“ü‚ê‚é‚Á‚Û‚¢B¡‚Ì‚Æ‚±‚ë bash ‚Å‚â‚Á‚Ä–â‘è‚È‚¢B
 
 ## DockerFile
 http://docs.docker.jp/engine/reference/builder.html#
