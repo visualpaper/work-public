@@ -9,7 +9,9 @@ public class BinaryAssembler {
   public SimpleResponseSchema to(@Nonnull String name) {
     SimpleResponseSchema schema = new SimpleResponseSchema();
 
-    schema.setName(name);
+    schema.setId(0);
+    schema.setBytes(10);
+    schema.setHex(9223372036854775807L);
     return schema;
   }
 }
