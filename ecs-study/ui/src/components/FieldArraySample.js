@@ -93,7 +93,7 @@ const bytesValidator = (value) => {
   }
 
   if (new Blob([value]).size > 189) {
-    return 'Please enter UTF-8 string up to 184 bytes';
+    return 'Please enter UTF-8 string up to 189 bytes';
   }
 }
 

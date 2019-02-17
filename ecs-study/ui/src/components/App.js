@@ -32,11 +32,12 @@ class Sample extends React.Component {
 
 	componentDidMount() {
 		/*
+		console.log(new Blob(["𦫿𦫿𦫿𦫿𦫿𦫿𦫿𦫿𦫿𦫿𦫿𦫿𦫿𦫿𦫿𦫿𦫿𦫿𦫿𦫿𦫿𦫿𦫿𦫿𦫿𦫿𦫿𦫿𦫿𦫿𦫿𦫿𦫿𦫿𦫿𦫿𦫿𦫿𦫿𦫿𦫿𦫿𦫿𦫿𦫿𦫿𦫿"]).size)
 		this.setState({
 			datas: [{
 				id: 0,
-				bytes: 10,
-				hex: BN(9223372036854775807).toString(),
+				bytes: "♥",
+				hex: "9223372036854775807",
 			}]
 		});
 		*/
