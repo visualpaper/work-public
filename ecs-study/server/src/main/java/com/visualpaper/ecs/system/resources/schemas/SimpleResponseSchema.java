@@ -5,5 +5,7 @@ import lombok.Data;
 @Data
 public class SimpleResponseSchema {
 
-  private String name;
+  private int id;
+  private int bytes;
+  private Long hex;
 }

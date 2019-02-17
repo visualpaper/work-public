@@ -1,117 +1,191 @@
 import React from 'react';
-import { Formik, FieldArray, Form, Field, getIn } from 'formik';
+import bigInt from 'big-integer'
 import { Table, Button, Input } from 'reactstrap';
+import { withFormik, Form, Field, FieldArray, getIn } from 'formik';
 
-const initialBoards = [
-  {
-    id: "1"
-  },
-  {
-    id: 2
+const defaultData = {
+  id: 0,
+  bytes: 10,
+  hex: "9223372036854775807",
+}
+
+// Components (とりあえずでここに置く)
+const AddButton = ({ field, form, ...props }) => (
+  <Button
+    type="button"
+    onClick={() => props.arrayHelpers.remove(props.dataIndex)}>
+    -
+  </Button>
+)
+
+const TextFieldWithFormik = ({ field, form }) => {
+  const error = getIn(form.errors, field.name);
+
+  return (
+    <>
+      <Input
+        id={field.name}
+        label=""
+        defaultValue={field.value}
+        onChange={field.onChange}
+        invalid={(error !== undefined)}
+        errormessage={error} />
+      <div>{error}</div>
+    </>
+  )
+}
+
+// 便利関数
+const isNumeric = (value) => {
+  return (/^\d+$/).test(value)
+}
+
+const isEmpty = (value) => {
+  return !value || value === "";
+}
+
+
+// Validater
+/**
+ * - 必須
+ * - 0 ～ 299 範囲内である
+ * 
+ * @param {*} value 
+ */
+const idValidator = (value) => {
+
+  if (isEmpty(value)) {
+    return 'Required';
   }
-]
 
-function allValidate(values) {
+  if (!isNumeric(value) || value < 0 || 299 < value) {
+    return 'Please enter a value within 0-299';
+  }
+}
+
+
+/**
+ * - -9223372036854775808 ～ 9223372036854775807 範囲内である
+ * 
+ * @param {*} value 
+ */
+const hexValidator = (value) => {
+
+  if (isEmpty(value)) {
+    return;
+  }
+
+  if (
+    bigInt(value).lesser(bigInt("-9223372036854775808")) ||
+    bigInt(value).greater(bigInt("9223372036854775807"))
+  ) {
+    return 'Please enter a value within -9223372036854775808-9223372036854775807';
+  }
+}
+
+/**
+ * - 189 バイト以下
+ */
+const bytesValidator = (value) => {
+
+  if (isEmpty(value)) {
+    return;
+  }
+
+  if (new Blob([value]).size > 189) {
+    return 'Please enter UTF-8 string up to 189 bytes';
+  }
+}
+
+
+class FieldArraySample extends React.Component {
+
+  render() {
+    const { values } = this.props;
+
+    return (
+      <Form>
+        <FieldArray
+          name="datas"
+          render={arrayHelpers => (
+            <>
+              <Table striped>
+                <thead>
+                  <tr>
+                    <th>-</th>
+                    <th>ID</th>
+                    <th>BYTES</th>
+                    <th>HEX</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {values.datas.map((data, index) => (
+
+                    <tr key={index}>
+                      <td><Field arrayHelpers={arrayHelpers} dataIndex={index} component={AddButton} /></td>
+                      <td><Field name={`datas.${index}.id`} validate={idValidator} component={TextFieldWithFormik} /></td>
+                      <td><Field name={`datas.${index}.bytes`} validate={bytesValidator} component={TextFieldWithFormik} /></td>
+                      <td><Field name={`datas.${index}.hex`} validate={hexValidator} component={TextFieldWithFormik} /></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+              <Button onClick={() => arrayHelpers.push(toFormValue(defaultData))}>+</Button>
+              <Button onClick={() => window.location.reload()}>Reset</Button>
+              <Button type="submit">Send to Server</Button>
+            </>
+          )}
+        />
+      </Form>
+    )
+  }
+}
+
+const toFormValue = (data) => {
+
+  return {
+    id: String(data.id),
+    bytes: String(data.bytes),
+    hex: data.hex
+  }
+}
+
+const allValidator = (values) => {
   let errors = {};
 
-  console.log(values)
-  // 常に発火。error が上書きされる
-  errors.boards = [
-    { id: "aaaa" }
-  ]
-  console.log("allValidate")
+  errors.datas = values.datas.map((value, index, self) => {
+
+    if (isDuplicatedId(self, value.id)) {
+      return { id: "duplicated" }
+    }
+    return {}
+  })
 
   return errors;
 }
 
-function validateUsername(value) {
-  let error;
-  console.log("checkUserName");
-  if (value === 'admin') {
-    error = 'Nice try!';
-  }
-  return error;
+const isDuplicatedId = (values, id) => {
+  return values.filter((value) => value.id === id).length > 1;
 }
 
-const ErrorMessage = ({ field, form, ...props }) => {
-  const error = getIn(form.errors, props.validationKey);
+const MyEnhancedForm = withFormik({
 
-  return error ? error : null;
-};
+  mapPropsToValues: ({ datas }) => {
+    if (datas) {
+      return { datas: datas.map((value) => toFormValue(value)) };
+    }
+    return { datas: [] }
+  },
 
-export default () => (
-  <div>
-    <Formik
-      enableReinitialize
-      validate={allValidate}
-      validateOnChange
-      initialValues={{ boards: initialBoards }}
-      onSubmit={values => {
-        console.log(values);
-      }}
-      render={({ values }) => (
-        <Form>
-          <FieldArray
-            name="boards"
-            render={arrayHelpers => (
-              <>
-                <Table striped>
-                  <thead>
-                    <tr>
-                      <th className="col-xs-1">aaaaa</th>
-                      <th className="col-xs-1">bbbb</th>
-                      <th className="col-xs-1">aaaaa</th>
-                      <th className="col-xs-1">bbbb</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {values.boards.map((board, index) => (
+  enableReinitialize: true,
 
-                      <tr key={index}>
-                        <td><Field
-                          arrayHelpers={arrayHelpers}
-                          index={index}
-                          component={({ field, form, ...innerProps }) => (
-                            <Button type="button" onClick={() => innerProps.arrayHelpers.remove(innerProps.index)}>-</Button>
-                          )
-                          }
-                        /></td>
-                        <td><Field
-                          name={`boards.${index}.id`}
-                          validate={validateUsername}
-                          /*
-                          component={({ field, form }) => (
-                            <Input
-                              id={field.name}
-                              defaultValue={field.value}
-                              onBlur={e => {
-                                form.setFieldValue(field.name, e.target.value)
-                              }
-                            }
-                          */
-                          render={({ field, form }) => (
-                            <Input
-                              id={field.name}
-                              defaultValue={field.value}
-                              onChange={field.onChange}
-                            />
-                          )}
-                        />
-                          <Field validationKey={`boards.${index}.id`} component={ErrorMessage} />
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </Table>
-                <Button onClick={() => { arrayHelpers.push({ id: 0 }) }}>+</Button>
-                <Button onClick={() => window.location.reload()}>Reset</Button>
-                <Button type="submit">Send to Server</Button>
-              </>
-            )}
-          />
-        </Form>
-      )}
-    >
-    </Formik>
-  </div>
-)
+  validate: allValidator,
+
+  handleSubmit: (values) => {
+    console.log(values)
+  },
+
+  displayName: 'BasicForm',
+})(FieldArraySample);
+
+export default MyEnhancedForm;
