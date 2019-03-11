@@ -1,173 +1,177 @@
 
-# Docker �֘A�׋�
-## �͂��߂�
-### ���p��
-1. EC2 �쐬
-2. [�ڑ�] ���ɕ\������� EC2 �z�X�g��/�L�[�y�A�t�@�C����閧���Ɏw�肵 SSH �ڑ�
-�� �f�t�H���g�� 22 �|�[�g�͊J���Ă���
+# Docker 関連勉強
+## はじめに
+### 環境用意
+1. EC2 作成
+2. [接続] 欄に表示される EC2 ホスト名/キーペアファイルを秘密鍵に指定し SSH 接続
+※ デフォルトで 22 ポートは開いている
 
-### Docker �����ݒ�
-1. �C���X�g�[��
+### Docker 初期設定
+1. インストール
 ```
 sudo yum update -y
 sudo yum install -y docker
 ```
 
-2. �N��
+2. 起動
 ```
 sudo service docker start
 ```
 
-3. Docker �O���[�v�� ec2-user ��ǉ�
+3. Docker グループに ec2-user を追加
 ```
 sudo usermod -a -G docker ec2-user
 ```
 
-4. ��U���O�A�E�g�˃��O�C��
+4. 一旦ログアウト⇒ログイン
 
-5. info �\���m�F
+5. info 表示確認
 ```
 docker info
 ```
-�� ec2-user �� sudo �Ȃ��ł����邱�Ƃ��m�F
+※ ec2-user で sudo なしでいけることを確認
 
-## STEP1: �C���[�W�擾�`�N���`�I��
-1. �C���[�W�� Docker HUB ���擾����
+## STEP1: イメージ取得～起動～終了
+1. イメージを Docker HUB より取得する
 > docker pull hello-world
 
-2. �C���[�W�ꗗ�m�F
+2. イメージ一覧確認
 > docker image ls
 
-3. �C���[�W�����ɃR���e�i���N������
+3. イメージを元にコンテナを起動する
 > docker run hello-world
 
-4. �N�����Ă���R�l�e�i�̊m�F
+4. 起動しているコネテナの確認
 > docker ps
-�� hello-world �͋N�������ςȂ��łȂ��炵��
+※ hello-world は起動しっぱなしでないらしい
 
-5. ��~���Ă���R���e�i�̊m�F
+5. 停止しているコンテナの確認
 > docker ps -a
 
-6. �R���e�i�̍폜
-> docker rm [�R���e�iID]
+6. コンテナの削除
+> docker rm [コンテナID]
 
-7. ��~���Ă���R���e�i�̊m�F
+7. 停止しているコンテナの確認
 > docker ps -a
 
-8. �C���[�W�̍폜
-> docker rmi [�C���[�WID]
+8. イメージの削除
+> docker rmi [イメージID]
 
-9. �C���[�W�̊m�F
+9. イメージの確認
 > docker image ls
 
 ## Step2. DockerFile
-* Dockerfile �̓R���e�i�[���̊��ŉ����N���邩���`�������
+* Dockerfile はコンテナー内の環境で何が起こるかを定義するもの
 
 ```
-# �`�[�g�V�[�g
-## �֗�
+# チートシート
+## 便利
 apt-get update
 apt-get install vim
 
 ## Docker
 sudo service docker start
 
-### �m�F�n
-* �����Ă���R���e�i�̊m�F
+### 確認系
+* 動いているコンテナの確認
 docker ps
 
-* ��~���Ă���R���e�i�̊m�F
+* 停止しているコンテナの確認
 docker ps -a
 
-* �C���[�W�̊m�F
+* イメージの確認
 docker image ls
 
-### �쐬�n
-* �C���[�W�̍쐬
-docker build [ -t �o�C���[�W���p [ :�o�^�O���p ] ] �oDockerfile�̂���f�B���N�g���p
+### 作成系
+* イメージの作成
+docker build [ -t ｛イメージ名｝ [ :｛タグ名｝ ] ] ｛Dockerfileのあるディレクトリ｝
 
-### �擾�n
-* �C���[�W�̎擾
-docker pull �C���[�W��[:�^�O|@�C���[�W�̃n�b�V���l]
-��: docker pull debian:jessie
-��(ECR):
+* イメージの更新
+docker commit [コンテナId] {作成するイメージ名}:{作成するタグ名}
+例: docker commit 68cf60dfc0e9 httpd_rewrite_20190312:latest
+
+### 取得系
+* イメージの取得
+docker pull イメージ名[:タグ|@イメージのハッシュ値]
+例: docker pull debian:jessie
+例(ECR):
 $(aws ecr get-login --region ap-northeast-1 --no-include-email)
 docker pull 683640743654.dkr.ecr.ap-northeast-1.amazonaws.com/umejima-sample-ecr:latest
 
-### �N���n
-* �R���e�i�̋N��
-docker run [�C���[�WID]
-�� ���݂��Ȃ��ꍇ�ADockerHUB ���� PULL ������ۂ��H
+### 起動系
+* コンテナの起動
+docker run [イメージID]
+※ 存在しない場合、DockerHUB から PULL するっぽい？
 
-  ��: �}�V���̃|�[�g4000���R���e�i�̌��J�|�[�g80�Ƀ}�b�s���O���āA�A�v�������s
-  docker run -p 4000:80 <�C���[�WID>
+  例: マシンのポート4000をコンテナの公開ポート80にマッピングして、アプリを実行
+  docker run -p 4000:80 <イメージID>
 
-  ��: �����o�b�N�O���E���h�Ńf�^�b�`���[�h�Ŏ��s
-  docker run -d -p 4000:80 <�C���[�WID>
+  例: ↑をバックグラウンドでデタッチモードで実行
+  docker run -d -p 4000:80 <イメージID>
 
-  ��: �N�������܂܂ɂ���
-  docker run -itd <�C���[�WID>
+  例: 起動したままにする
+  docker run -itd <イメージID>
 
-  ��: host �� iptable �𗘗p����
-  docker run -itd --net=host <�C���[�WID>
+  例: host の iptable を利用する
+  docker run -itd --net=host <イメージID>
 
-### �ċN��
-docker restart <�R���e�iID>
+### 再起動
+docker restart <コンテナID>
 
-### ��~�n
-* �R���e�i�̒�~
-docker container stop <�R���e�iID>
+### 停止系
+* コンテナの停止
+docker container stop <コンテナID>
 
-### �폜�n
-* �R���e�i�̍폜
-docker rm [�R���e�iID] [�R���e�iID] ...
-�� �S�R���e�i�폜 (docker rm `docker ps -a -q`)
+### 削除系
+* コンテナの削除
+docker rm [コンテナID] [コンテナID] ...
+※ 全コンテナ削除 (docker rm `docker ps -a -q`)
 
-* �C���[�W�̍폜
-docker rmi [�C���[�WID]
+* イメージの削除
+docker rmi [イメージID]
 
-### �R���e�i�ɓ���
-docker exec -it <�C���[�WID> bach
-�� bash �Ƃ� sh �Ƃ��œ������ۂ��B���̂Ƃ��� bash �ł���Ė��Ȃ��B
+### コンテナに入る
+docker exec -it <イメージID> bach
+※ bash とか sh とかで入れるっぽい。今のところ bash でやって問題ない。
 
 ## DockerFile
 http://docs.docker.jp/engine/reference/builder.html#
 
-* �ȍ~�̖��߂Ŏg�� �x�[�X�E�C���[�W ���w�肵�܂��B
-FROM <�C���[�W> | <�C���[�W>:<�^�O> | <�C���[�W>@<digest>
-��: FROM python:2.7-slim
-�� �ŏ��ɋL�ڂ���K�v������B
+* 以降の命令で使う ベース・イメージ を指定します。
+FROM <イメージ> | <イメージ>:<タグ> | <イメージ>@<digest>
+例: FROM python:2.7-slim
+※ 最初に記載する必要がある。
 
-# ���ߎ��s���̍�ƃf�B���N�g�����w�肵�܂��B
+# 命令実行時の作業ディレクトリを指定します。
 WORKDIR <path>
-��: WORKDIR /app
-�� �w�肪�Ȃ��ꍇ�ł��A����ɍ����炵���B
+例: WORKDIR /app
+※ 指定がない場合でも、勝手に作られるらしい。
 
-# �t�@�C�����ړ����܂��B
-COPY <�\�[�X> <���M��>
-��: COPY . /app
-�� <���M��> �͐�΃p�X�ł��B���邢�́A�p�X�� WORKDIR ����̑��΃p�X�ł��B
+# ファイルを移動します。
+COPY <ソース> <送信先>
+例: COPY . /app
+※ <送信先> は絶対パスです。あるいは、パスは WORKDIR からの相対パスです。
 
-# �V�F���`���ŃR�}���h�����s���܂��B
-RUN <�R�}���h>
-��: RUN pip install --trusted-host pypi.python.org -r requirements.txt
-�� �V�F���`���A�R�}���h�����s����BLinux ��̃f�t�H���g�� /bin/sh -c
+# シェル形式でコマンドを実行します。
+RUN <コマンド>
+例: RUN pip install --trusted-host pypi.python.org -r requirements.txt
+※ シェル形式、コマンドを実行する。Linux 上のデフォルトは /bin/sh -c
 
-# �R���e�i�����s���Ƀ��b�X������|�[�g���w�肵�܂��B
-EXPOSE <�|�[�g�ԍ�>
-��: EXPOSE 80
-�� -p �t���O���w�肵�Ȃ���΁A���ꂾ���ł̓z�X�g����R���e�i�ɃA�N�Z�X�ł���悤�ɂ��܂���Ƃ����L�q�L��B
+# コンテナが実行時にリッスンするポートを指定します。
+EXPOSE <ポート番号>
+例: EXPOSE 80
+※ -p フラグを指定しなければ、これだけではホストからコンテナにアクセスできるようにしませんという記述有り。
 
-# ���ϐ���ݒ肵�܂��B
+# 環境変数を設定します。
 ENV <key> <value>
-��: ENV NAME World
+例: ENV NAME World
 
 # Run app.py when the container launches
-CMD ["���s�o�C�i��", "�p�����[�^�P", "�p�����[�^�Q"] �i exec �`���A��������`���j
-��: CMD ["python", "app.py"]
-�� Dockerfile �� CMD ���߂���x�����w��ł��܂��B������ CMD ������ꍇ�A�ł����� CMD �̂ݗL���B
+CMD ["実行バイナリ", "パラメータ１", "パラメータ２"] （ exec 形式、推奨する形式）
+例: CMD ["python", "app.py"]
+※ Dockerfile で CMD 命令を一度だけ指定できます。複数の CMD がある場合、最も後ろの CMD のみ有効。
 ```
 
 # TODO
 ## DockerCompose
-* �R���e�i���m�̘A�g�֘A
+* コンテナ同士の連携関連
