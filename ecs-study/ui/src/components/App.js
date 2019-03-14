@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { HashRouter, Switch, Link, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Link, Route } from "react-router-dom";
 import ExamplePage from './Example.js';
 import BasicPage from './Basic.js';
 import FieldArrayPage from './FieldArraySample.js';
@@ -54,7 +54,7 @@ class Sample extends React.Component {
 
 	render() {
 		return (
-			<HashRouter history={this.props.history} >
+			<Router basename={process.env.REACT_APP_DEV_BASE_URL} history={this.props.history} >
 				<div style={{ width: '500px', textAlign: 'left' }}>
 					<ul style={{ display: 'flex' }}>
 						<li style={{ display: 'inline', width: '100px' }}><Link to='/'>top</Link></li>
@@ -78,7 +78,7 @@ class Sample extends React.Component {
 						</Switch>
 					</div>
 				</div>
-			</HashRouter>
+			</Router>
 		);
 	}
 }
