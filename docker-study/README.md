@@ -90,6 +90,10 @@ docker build [ -t ｛イメージ名｝ [ :｛タグ名｝ ] ] ｛Dockerfileの�
 docker commit [コンテナId] {作成するイメージ名}:{作成するタグ名}
 例: docker commit 68cf60dfc0e9 httpd_rewrite_20190312:latest
 
+* ファイルのコピー(特定バージョンではコンテナ⇒ホストはできない)
+コンテナからホスト: sudo docker cp <コンテナID>:/etc/my.cnf my.cnf
+ホストからコンテナ: sudo docker cp my.cnf <コンテナID>:/etc/my.cnf
+
 ### 取得系
 * イメージの取得
 docker pull イメージ名[:タグ|@イメージのハッシュ値]
