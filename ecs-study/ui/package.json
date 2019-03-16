@@ -37,6 +37,6 @@
     "babel-cli": "^6.26.0",
     "eslint-plugin-react": "^7.11.1"
   },
-  "homepage": ".",
+  "homepage": "/view",
   "proxy": "http://localhost:8080"
 }
