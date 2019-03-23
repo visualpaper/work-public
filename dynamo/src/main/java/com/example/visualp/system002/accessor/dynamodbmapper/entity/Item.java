@@ -2,6 +2,7 @@ package com.example.visualp.system002.accessor.dynamodbmapper.entity;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
 @DynamoDBTable(tableName = "REPLACE_TABLE_NAME")
@@ -22,7 +23,7 @@ public class Item {
     this.id = id;
   }
 
-  @DynamoDBAttribute(attributeName = "sort")
+  @DynamoDBRangeKey(attributeName = "sort")
   public Integer getSort() {
     return sort;
   }
@@ -38,5 +39,11 @@ public class Item {
 
   public void setInfo(String info) {
     this.info = info;
+  }
+
+  public void print() {
+    System.out.println(id);
+    System.out.println(sort);
+    System.out.println(info);
   }
 }
