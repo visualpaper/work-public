@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class DynamoDbMapperAccessor {
 
@@ -49,5 +50,16 @@ public class DynamoDbMapperAccessor {
       return new Items(new ArrayList<>());
     }
     return new Items(Arrays.asList(paginatedQueryList.get(0)));
+  }
+
+  @Nullable
+  public Item load(@Nonnull String id, int sort) {
+    DynamoDBMapper mapper = DynamoDbMapperProvider.provide();
+
+    Item item = new Item();
+    item.setId(id);
+    item.setSort(sort);
+
+    return mapper.load(item);
   }
 }
