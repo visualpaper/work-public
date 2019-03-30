@@ -47,7 +47,7 @@ public class RedisAccessor {
     // MIN/MAX 値が分かれば全部取得できる。
     jedis.zcount("sortHashKey", Long.MIN_VALUE, Long.MAX_VALUE);
 
-    // 存在しない Key の場合は Null
+    // 存在しない Key の場合は Jedis の場合は 0
     jedis.zcount("sortHashKey2", Long.MIN_VALUE, Long.MAX_VALUE);
 
     jedis.del("sortHashKey");
