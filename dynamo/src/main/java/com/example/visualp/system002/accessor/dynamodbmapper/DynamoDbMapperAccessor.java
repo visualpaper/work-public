@@ -1,6 +1,7 @@
 package com.example.visualp.system002.accessor.dynamodbmapper;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper.FailedBatch;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedQueryList;
@@ -9,11 +10,13 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ReturnConsumedCapacity;
 import com.example.visualp.system002.accessor.dynamodbmapper.entity.Item;
 import com.example.visualp.system002.accessor.dynamodbmapper.entity.ItemExpressions;
+import com.example.visualp.system002.accessor.dynamodbmapper.entity.ItemFactory;
 import com.example.visualp.system002.accessor.dynamodbmapper.entity.Items;
 import com.example.visualp.system002.config.DynamoDbMapperProvider;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -61,5 +64,21 @@ public class DynamoDbMapperAccessor {
     item.setSort(sort);
 
     return mapper.load(item);
+  }
+
+  public long count(@Nonnull String id) {
+    DynamoDBMapper mapper = DynamoDbMapperProvider.provide();
+
+    // 結局、内部でクエリー発行しているので 4kb 制限での RCU 使ってる。
+    return mapper.count(Item.class, ItemExpressions.queryCase1(id));
+  }
+
+  public void batchWrite(@Nonnull String id) {
+    DynamoDBMapper mapper = DynamoDbMapperProvider.provide();
+
+    List<FailedBatch> failedBatches = mapper.batchWrite(
+        ItemFactory.create(id, 60, 100),
+        new ArrayList<>()
+    );
   }
 }

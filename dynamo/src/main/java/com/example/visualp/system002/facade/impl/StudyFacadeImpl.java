@@ -20,6 +20,16 @@ public class StudyFacadeImpl implements StudyFacade {
   }
 
   @Override
+  public void studyCount(@Nonnull String id) throws Exception {
+    mapperAccessor.count(id);
+  }
+
+  @Override
+  public void batchWrite(@Nonnull String id) throws Exception {
+    mapperAccessor.batchWrite(id);
+  }
+
+  @Override
   public void studyAdd() {
     accessor.update();
   }
