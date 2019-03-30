@@ -27,6 +27,28 @@ public class StudyResources {
         .build();
   }
 
+  @Path("count/{id}")
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response simpleCount(@PathParam("id") String id) throws Exception {
+    facade.studyCount(id);
+
+    return Response
+        .noContent()
+        .build();
+  }
+
+  @Path("batchWrite/{id}")
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response batchWrite(@PathParam("id") String id) throws Exception {
+    facade.batchWrite(id);
+
+    return Response
+        .noContent()
+        .build();
+  }
+
   @Path("add")
   @POST
   @Produces(MediaType.APPLICATION_JSON)
