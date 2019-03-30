@@ -18,6 +18,6 @@ public class System004Application {
 
 	@PostConstruct
 	public void start() throws Exception {
-		accessor.sample();
+		accessor.zCommands();
 	}
 }
