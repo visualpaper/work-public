@@ -3,7 +3,10 @@ package com.example.visualp.system19053101;
 import com.example.visualp.system19053101.common.scheduling.ScheduleTask;
 import com.example.visualp.system19053101.common.scheduling.ScheduledTaskHolder;
 import com.example.visualp.system19053101.common.scheduling.ScheduledTaskRegistrar;
+import com.example.visualp.system19053101.facade.ScheduleFacade;
+import com.example.visualp.system19053101.facade.impl.ScheduleFacadeImpl;
 import com.example.visualp.system19053101.resources.HealthCheckResource;
+import com.example.visualp.system19053101.resources.ScheduleResource;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.PostConstruct;
 import javax.ws.rs.ApplicationPath;
@@ -24,8 +27,12 @@ public class App extends ResourceConfig {
       @Override
       protected void configure() {
 
+        // Facade
+        bind(ScheduleFacadeImpl.class).to(ScheduleFacade.class);
+
         // Resources
         bind(HealthCheckResource.class).to(HealthCheckResource.class);
+        bind(ScheduleResource.class).to(ScheduleResource.class);
 
         bind(registrar).to(ScheduledTaskHolder.class);
       }

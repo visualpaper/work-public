@@ -30,7 +30,7 @@ public class ScheduledTasks {
   */
 
   // 月曜日から金曜日の間、5秒間隔で実行する
-  @Scheduled(cron="*/5 * * * * MON-FRI")
+  @Scheduled(cron="*/5 * * * * *")
   public void task4() {
     System.out.println(now() + "Run task A. ThreadId:" + Thread.currentThread().getId());
   }
