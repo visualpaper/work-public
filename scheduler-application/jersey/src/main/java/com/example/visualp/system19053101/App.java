@@ -4,7 +4,9 @@ import com.example.visualp.system19053101.common.scheduling.ScheduleTask;
 import com.example.visualp.system19053101.common.scheduling.ScheduledTaskHolder;
 import com.example.visualp.system19053101.common.scheduling.ScheduledTaskRegistrar;
 import com.example.visualp.system19053101.facade.ScheduleFacade;
+import com.example.visualp.system19053101.facade.SnapshotFacade;
 import com.example.visualp.system19053101.facade.impl.ScheduleFacadeImpl;
+import com.example.visualp.system19053101.facade.impl.SnapshotFacadeImpl;
 import com.example.visualp.system19053101.resources.HealthCheckResource;
 import com.example.visualp.system19053101.resources.ScheduleResource;
 import java.util.concurrent.TimeUnit;
@@ -29,6 +31,7 @@ public class App extends ResourceConfig {
 
         // Facade
         bind(ScheduleFacadeImpl.class).to(ScheduleFacade.class);
+        bind(SnapshotFacadeImpl.class).to(SnapshotFacade.class);
 
         // Resources
         bind(HealthCheckResource.class).to(HealthCheckResource.class);
