@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 import javax.annotation.Nonnull;
 
 public class ScheduledTaskRegistrar implements ScheduledTaskHolder {
+
   private final ScheduledExecutorService executor;
   private ScheduledFuture<?> future;
 
@@ -14,7 +15,8 @@ public class ScheduledTaskRegistrar implements ScheduledTaskHolder {
     this.executor = Executors.newSingleThreadScheduledExecutor();
   }
 
-  public void initialize(@Nonnull Runnable command, long initialDelay, long delay, @Nonnull TimeUnit unit) {
+  public void initialize(@Nonnull Runnable command, long initialDelay, long delay,
+      @Nonnull TimeUnit unit) {
     this.future = executor.scheduleWithFixedDelay(command, initialDelay, delay, unit);
   }
 
