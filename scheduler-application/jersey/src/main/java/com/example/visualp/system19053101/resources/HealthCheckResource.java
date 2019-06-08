@@ -18,7 +18,7 @@ public class HealthCheckResource {
   @Produces(MediaType.APPLICATION_JSON)
   public Response healthCheck() throws Exception {
 
-    if (holder.isDone()) {
+    if (holder.isShutdown()) {
       return Response
           .serverError()
           .build();

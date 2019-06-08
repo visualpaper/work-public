@@ -1,13 +1,9 @@
 package com.example.visualp.system19053101;
 
-import com.example.visualp.system19053101.common.scheduling.ScheduleTask;
 import com.example.visualp.system19053101.common.scheduling.ScheduledTaskHolder;
 import com.example.visualp.system19053101.common.scheduling.ScheduledTaskRegistrar;
-import com.example.visualp.system19053101.facade.ScheduleFacade;
-import com.example.visualp.system19053101.facade.impl.ScheduleFacadeImpl;
 import com.example.visualp.system19053101.resources.HealthCheckResource;
 import com.example.visualp.system19053101.resources.ScheduleResource;
-import java.util.concurrent.TimeUnit;
 import javax.annotation.PostConstruct;
 import javax.ws.rs.ApplicationPath;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
@@ -16,11 +12,10 @@ import org.glassfish.jersey.server.ResourceConfig;
 @ApplicationPath("/")
 public class App extends ResourceConfig {
 
-  private ScheduledTaskRegistrar registrar;
+  private ScheduledTaskRegistrar scheduledTaskRegistrar;
 
   public App() {
-    registrar = new ScheduledTaskRegistrar();
-
+    scheduledTaskRegistrar = new ScheduledTaskRegistrar();
     packages(this.getClass().getPackage().getName());
 
     register(new AbstractBinder() {
@@ -28,28 +23,26 @@ public class App extends ResourceConfig {
       protected void configure() {
 
         // Facade
-        bind(ScheduleFacadeImpl.class).to(ScheduleFacade.class);
 
         // Resources
         bind(HealthCheckResource.class).to(HealthCheckResource.class);
         bind(ScheduleResource.class).to(ScheduleResource.class);
 
-        bind(registrar).to(ScheduledTaskHolder.class);
+        bind(scheduledTaskRegistrar).to(ScheduledTaskHolder.class);
       }
     });
-
-    Runtime.getRuntime().addShutdownHook(new Thread(registrar::shutdown));
   }
 
   @PostConstruct
   void postConstruct() {
 
-    // 時間とかは Config で差し込む。
-    registrar.initialize(
-        new ScheduleTask(),
-        0,
-        3,
-        TimeUnit.SECONDS
+    Runtime.getRuntime().addShutdownHook(
+        new Thread(() -> {
+          scheduledTaskRegistrar.shutdown();
+        })
     );
+
+    // 時間とかは Config で差し込む。
+    scheduledTaskRegistrar.initialize();
   }
 }

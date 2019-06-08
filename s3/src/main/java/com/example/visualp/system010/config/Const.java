@@ -7,7 +7,7 @@ public class Const {
   public static final String AWS_ACCESS_KEY = "";
   public static final String AWS_SECRET_KEY = "";
 
-  public static final Regions REGION = Regions.US_EAST_2;
+  public static final Regions REGION = Regions.AP_NORTHEAST_1;
 
-  public static final String S3_BUCKET_NAME = "umejima-test-sigv4";
+  public static final String S3_BUCKET_NAME = "itz-sony-s3-u";
 }
