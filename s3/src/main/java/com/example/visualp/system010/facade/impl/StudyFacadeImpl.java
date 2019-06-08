@@ -29,7 +29,13 @@ public class StudyFacadeImpl implements StudyFacade {
   public void putBase64Binary(@Nonnull InputStream is, long contentLength) {
     accessor.putBase64Binary(
         new Base64InputStream(is, false),
+        855531600
+    );
+    /*
+    accessor.putBase64Binary(
+        is,
         contentLength
     );
+    */
   }
 }

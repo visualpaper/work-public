@@ -20,12 +20,13 @@ public class S3Accessor {
   }
 
   @Nonnull
-  public Base64InputStream getBase64Binary() {
+  public InputStream getBase64Binary() {
     AmazonS3 client = S3Provider.provide();
 
     S3Object s3Object = client.getObject(S3_BUCKET_NAME, "decode-test");
 
-    return new Base64InputStream(s3Object.getObjectContent(), true);
+    return s3Object.getObjectContent();
+    //return new Base64InputStream(s3Object.getObjectContent(), true);
   }
 
   public void putBase64Binary(@Nonnull InputStream is, long contentLength) {
@@ -34,7 +35,7 @@ public class S3Accessor {
     ObjectMetadata metadata = new ObjectMetadata();
 
     // Base64 -> デコードすると length が減るので問題。↓ Base64 前の値を設定するとうまくいく。(REST 送信 Stream は 78 byte)
-    //metadata.setContentLength(57);
+    metadata.setContentLength(contentLength);
     client.putObject(S3_BUCKET_NAME, "decode-upload", is, metadata);
   }
 }
