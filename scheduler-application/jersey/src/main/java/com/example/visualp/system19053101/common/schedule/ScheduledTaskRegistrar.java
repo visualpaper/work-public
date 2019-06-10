@@ -1,8 +1,12 @@
-package com.example.visualp.system19053101.common.scheduling;
+package com.example.visualp.system19053101.common.schedule;
 
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import javax.inject.Inject;
+import javax.ws.rs.core.Context;
+import org.glassfish.hk2.api.ServiceLocator;
 
 // [メモ] 正しく Executor はクローズされている。(変なスレッドが残りっぱになっていないことは確認済み)
 public class ScheduledTaskRegistrar implements ScheduledTaskHolder {

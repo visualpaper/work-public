@@ -1,6 +1,6 @@
 package com.example.visualp.system19053101.resources;
 
-import com.example.visualp.system19053101.common.scheduling.ScheduledTaskHolder;
+import com.example.visualp.system19053101.common.schedule.ScheduledTaskHolder;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

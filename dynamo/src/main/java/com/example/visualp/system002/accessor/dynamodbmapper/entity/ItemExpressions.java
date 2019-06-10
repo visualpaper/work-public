@@ -182,4 +182,24 @@ public class ItemExpressions {
 
     return expression;
   }
+
+  /**
+   * 7. KeyConditionExpression でソートキーのみ指定
+   */
+  @Nonnull
+  public static DynamoDBQueryExpression<Item> queryCase7() {
+    Map<String, AttributeValue> eav = new HashMap<>();
+    DynamoDBQueryExpression<Item> expression = new DynamoDBQueryExpression<>();
+
+    eav.put(":val1", new AttributeValue().withN(String.valueOf(0)));
+    eav.put(":val2", new AttributeValue().withN(String.valueOf(1)));
+    expression
+        .withIndexName("sima-sort-index")
+        .withKeyConditionExpression("sima = :val1 and sort < :val2 ")
+        .withExpressionAttributeValues(eav)
+        .withReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL)
+        .withConsistentRead(false); // gsi の場合は ConsistentRead は EVENTUAL
+
+    return expression;
+  }
 }

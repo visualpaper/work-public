@@ -1,4 +1,4 @@
-package com.example.visualp.system19053101.common.scheduling;
+package com.example.visualp.system19053101.common.schedule;
 
 public interface ScheduledTaskHolder {
 
