@@ -9,6 +9,7 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 public class ScheduleTask {
+
   public static final int READ_SANDBOX_ID = 0;
 
   private final DynamoDbAccessor accessor;

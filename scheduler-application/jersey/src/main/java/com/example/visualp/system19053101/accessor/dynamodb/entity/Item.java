@@ -7,6 +7,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
 @DynamoDBTable(tableName = "REPLACE_TABLE_NAME")
 public class Item {
+
   private String id;
 
   private int sandboxId;

@@ -1,17 +1,20 @@
 package com.example.visualp.system19053101.common.schedule;
 
-import java.util.concurrent.ExecutorService;
+import com.example.visualp.system19053101.common.ScheduleAppLocator;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import javax.inject.Inject;
-import javax.ws.rs.core.Context;
-import org.glassfish.hk2.api.ServiceLocator;
+import javax.annotation.Nonnull;
 
 // [メモ] 正しく Executor はクローズされている。(変なスレッドが残りっぱになっていないことは確認済み)
 public class ScheduledTaskRegistrar implements ScheduledTaskHolder {
 
+  private final ScheduleAppLocator locator;
   private ScheduledExecutorService executor;
+
+  public ScheduledTaskRegistrar(@Nonnull ScheduleAppLocator locator) {
+    this.locator = locator;
+  }
 
   public void initialize() {
 
@@ -20,7 +23,12 @@ public class ScheduledTaskRegistrar implements ScheduledTaskHolder {
     }
     executor = Executors.newSingleThreadScheduledExecutor();
     executor.scheduleWithFixedDelay(() -> {
-      System.out.println("TASK");
+      try {
+        locator.getService(ScheduleTask.class).execute();
+      } catch (Throwable e) {
+        // ロギングするだけで抑える
+        e.printStackTrace();
+      }
     }, 0, 3, TimeUnit.SECONDS);
   }
 
