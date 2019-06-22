@@ -1,6 +1,7 @@
 package com.example.visualp.system19053101.resources;
 
-import com.example.visualp.system19053101.common.scheduling.ScheduledTaskHolder;
+import com.example.visualp.system19053101.common.schedule.ScheduleTask;
+import com.example.visualp.system19053101.common.schedule.ScheduledTaskHolder;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -13,6 +14,9 @@ public class ScheduleResource {
 
   @Inject
   ScheduledTaskHolder holder;
+
+  @Inject
+  ScheduleTask task;
 
   @GET
   @Path("start")
@@ -30,6 +34,18 @@ public class ScheduleResource {
   @Produces(MediaType.APPLICATION_JSON)
   public Response stop() throws Exception {
     holder.shutdown();
+
+    return Response
+        .ok()
+        .build();
+  }
+
+
+  @GET
+  @Path("exec")
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response exec() throws Exception {
+    task.execute();
 
     return Response
         .ok()

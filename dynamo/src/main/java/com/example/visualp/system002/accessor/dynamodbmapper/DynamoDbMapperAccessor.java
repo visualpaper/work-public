@@ -43,8 +43,9 @@ public class DynamoDbMapperAccessor {
   public Items query(@Nonnull String id) throws Exception {
     DynamoDBMapper mapper = DynamoDbMapperProvider.provide();
 
-    PaginatedQueryList<Item> paginatedQueryList = mapper.query(Item.class, ItemExpressions.queryCase5(id));
+    PaginatedQueryList<Item> paginatedQueryList = mapper.query(Item.class, ItemExpressions.queryCase7());
 
+    System.out.println(paginatedQueryList.size());
     // ↓の場合、PageList に対し全 fetch が走る。
     //return new Items(paginatedScanList);
 

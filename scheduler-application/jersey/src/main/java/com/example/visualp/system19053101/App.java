@@ -1,7 +1,10 @@
 package com.example.visualp.system19053101;
 
-import com.example.visualp.system19053101.common.scheduling.ScheduledTaskHolder;
-import com.example.visualp.system19053101.common.scheduling.ScheduledTaskRegistrar;
+import com.example.visualp.system19053101.accessor.dynamodb.DynamoDbAccessor;
+import com.example.visualp.system19053101.common.ScheduleAppLocator;
+import com.example.visualp.system19053101.common.schedule.ScheduleTask;
+import com.example.visualp.system19053101.common.schedule.ScheduledTaskHolder;
+import com.example.visualp.system19053101.common.schedule.ScheduledTaskRegistrar;
 import com.example.visualp.system19053101.resources.HealthCheckResource;
 import com.example.visualp.system19053101.resources.ScheduleResource;
 import javax.annotation.PostConstruct;
@@ -12,25 +15,39 @@ import org.glassfish.jersey.server.ResourceConfig;
 @ApplicationPath("/")
 public class App extends ResourceConfig {
 
+  private final ScheduleAppLocator locator;
+
   private ScheduledTaskRegistrar scheduledTaskRegistrar;
 
   public App() {
-    scheduledTaskRegistrar = new ScheduledTaskRegistrar();
     packages(this.getClass().getPackage().getName());
 
-    register(new AbstractBinder() {
+    AbstractBinder binder = new AbstractBinder() {
       @Override
       protected void configure() {
 
+        // Accessor
+        bind(DynamoDbAccessor.class).to(DynamoDbAccessor.class);
+
         // Facade
+
+        // Schedule
+        bind(ScheduleTask.class).to(ScheduleTask.class);
 
         // Resources
         bind(HealthCheckResource.class).to(HealthCheckResource.class);
         bind(ScheduleResource.class).to(ScheduleResource.class);
-
-        bind(scheduledTaskRegistrar).to(ScheduledTaskHolder.class);
       }
-    });
+    };
+
+    register(binder);
+
+    this.locator = new ScheduleAppLocator(binder);
+    this.scheduledTaskRegistrar = new ScheduledTaskRegistrar(locator);
+
+    binder.bind(scheduledTaskRegistrar)
+        .to(ScheduledTaskHolder.class);
+
   }
 
   @PostConstruct
