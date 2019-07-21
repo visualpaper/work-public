@@ -72,6 +72,22 @@ push したい branch に force push
 git push -f origin HEAD:feature/git-study-6
 ```
 
+・ rebase (特定のコミットを省く)
+1. rebase -i xxxxx
+2. 特定のコミットを除く (https://tkengo.github.io/blog/2013/06/08/git-rebase-reference2/)
+
+```
+pick xxxxxx comment-A ← これを省きたい
+pick yyyyyy comment-B
+↓
+r yyyyyy comment-B
+```
+
+3. コンフリクトが発生した場合は中断されるため、commit ダイアログにていつものようにマージ解消
+4. マージ解消したファイルを add する (https://qiita.com/ryosukehujisawa/items/d5f013e80f4845ec5e92#git-add)
+5. git rebase --continue で継続
+6. 後は squach to meger と同じで最後に git push -f すれば OK
+
 ・ squash to merge
 ```
 1. master ⇒ develop
