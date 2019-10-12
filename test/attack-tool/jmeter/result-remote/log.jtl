@@ -1,0 +1,101 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,Latency,IdleTime,Connect
+1570887286601,17,Step1 - Get,200,OK,[シナリオ1] Json Get And Post 1-1,text,true,,186,174,1,1,17,0,6
+1570887286645,7,Step2 - Post,200,OK,[シナリオ1] Json Get And Post 1-1,text,true,,181,253,1,2,7,0,0
+1570887286674,11,Step1 - Get,200,OK,[シナリオ2] Binary Data Get And Post 2-1,text,true,,1169,180,1,2,11,0,3
+1570887286698,0,Step2 - Post,Non HTTP response code: java.io.FileNotFoundException,Non HTTP response message: ./postBinary/sample (No such file or directory),[シナリオ2] Binary Data Get And Post 2-1,text,false,,2285,0,1,2,0,0,0
+1570887286704,9,Step1 - Get,200,OK,[シナリオ3] Additional 3-1,text,true,,186,174,1,1,9,0,2
+1570887286722,6,Random Step1 - Get,200,OK,[シナリオ3] Additional 3-1,text,true,,1169,180,1,1,6,0,0
+1570887286728,5,Step1 - Get,200,OK,[シナリオ3] Additional 3-1,text,true,,186,174,1,1,5,0,0
+1570887286733,1,Random Step2 - Post,Non HTTP response code: java.io.FileNotFoundException,Non HTTP response message: ./postBinary/sample (No such file or directory),[シナリオ3] Additional 3-1,text,false,,2285,0,1,1,0,0,0
+1570887286734,10,Step1 - Get,200,OK,[シナリオ3] Additional 3-1,text,true,,186,174,1,1,10,0,2
+1570887286744,5,Random Step1 - Get,200,OK,[シナリオ3] Additional 3-1,text,true,,1169,180,1,1,5,0,0
+1570887287605,9,Step1 - Get,200,OK,[シナリオ1] Json Get And Post 1-2,text,true,,186,174,1,1,9,0,3
+1570887287615,7,Step2 - Post,200,OK,[シナリオ1] Json Get And Post 1-2,text,true,,181,253,1,1,7,0,0
+1570887287650,8,Step1 - Get,200,OK,[シナリオ2] Binary Data Get And Post 2-2,text,true,,1169,180,1,1,8,0,2
+1570887287660,0,Step2 - Post,Non HTTP response code: java.io.FileNotFoundException,Non HTTP response message: ./postBinary/sample (No such file or directory),[シナリオ2] Binary Data Get And Post 2-2,text,false,,2285,0,1,2,0,0,0
+1570887287661,7,Step1 - Get,200,OK,[シナリオ3] Additional 3-2,text,true,,186,174,1,1,7,0,2
+1570887287668,6,Random Step1 - Get,200,OK,[シナリオ3] Additional 3-2,text,true,,1169,180,1,1,6,0,0
+1570887287674,5,Step1 - Get,200,OK,[シナリオ3] Additional 3-2,text,true,,186,174,1,1,5,0,0
+1570887287680,0,Random Step2 - Post,Non HTTP response code: java.io.FileNotFoundException,Non HTTP response message: ./postBinary/sample (No such file or directory),[シナリオ3] Additional 3-2,text,false,,2285,0,1,1,0,0,0
+1570887287681,7,Step1 - Get,200,OK,[シナリオ3] Additional 3-2,text,true,,186,174,1,1,6,0,2
+1570887287688,5,Random Step1 - Get,200,OK,[シナリオ3] Additional 3-2,text,true,,1169,180,1,1,5,0,0
+1570887288606,11,Step1 - Get,200,OK,[シナリオ1] Json Get And Post 1-3,text,true,,186,174,1,1,11,0,3
+1570887288618,6,Step2 - Post,200,OK,[シナリオ1] Json Get And Post 1-3,text,true,,181,253,1,1,6,0,0
+1570887288653,8,Step1 - Get,200,OK,[シナリオ2] Binary Data Get And Post 2-3,text,true,,1169,180,1,2,8,0,2
+1570887288662,1,Step2 - Post,Non HTTP response code: java.io.FileNotFoundException,Non HTTP response message: ./postBinary/sample (No such file or directory),[シナリオ2] Binary Data Get And Post 2-3,text,false,,2285,0,1,2,0,0,0
+1570887288661,9,Step1 - Get,200,OK,[シナリオ3] Additional 3-3,text,true,,186,174,1,1,9,0,3
+1570887288671,0,Random Step2 - Post,Non HTTP response code: java.io.FileNotFoundException,Non HTTP response message: ./postBinary/sample (No such file or directory),[シナリオ3] Additional 3-3,text,false,,2285,0,1,1,0,0,0
+1570887288672,8,Step1 - Get,200,OK,[シナリオ3] Additional 3-3,text,true,,186,174,1,1,8,0,2
+1570887288681,0,Random Step2 - Post,Non HTTP response code: java.io.FileNotFoundException,Non HTTP response message: ./postBinary/sample (No such file or directory),[シナリオ3] Additional 3-3,text,false,,2285,0,1,1,0,0,0
+1570887288683,7,Step1 - Get,200,OK,[シナリオ3] Additional 3-3,text,true,,186,174,1,1,7,0,2
+1570887288691,7,Random Step1 - Get,200,OK,[シナリオ3] Additional 3-3,text,true,,1169,180,1,1,7,0,0
+1570887289610,8,Step1 - Get,200,OK,[シナリオ1] Json Get And Post 1-4,text,true,,186,174,1,1,8,0,2
+1570887289619,5,Step2 - Post,200,OK,[シナリオ1] Json Get And Post 1-4,text,true,,181,253,1,1,5,0,0
+1570887289656,8,Step1 - Get,200,OK,[シナリオ2] Binary Data Get And Post 2-4,text,true,,1169,180,1,2,8,0,3
+1570887289665,0,Step2 - Post,Non HTTP response code: java.io.FileNotFoundException,Non HTTP response message: ./postBinary/sample (No such file or directory),[シナリオ2] Binary Data Get And Post 2-4,text,false,,2285,0,1,2,0,0,0
+1570887289663,8,Step1 - Get,200,OK,[シナリオ3] Additional 3-4,text,true,,186,174,1,1,8,0,3
+1570887289671,6,Random Step1 - Get,200,OK,[シナリオ3] Additional 3-4,text,true,,1169,180,1,1,6,0,0
+1570887289678,5,Step1 - Get,200,OK,[シナリオ3] Additional 3-4,text,true,,186,174,1,1,5,0,0
+1570887289683,6,Random Step1 - Get,200,OK,[シナリオ3] Additional 3-4,text,true,,1169,180,1,1,6,0,0
+1570887289689,5,Step1 - Get,200,OK,[シナリオ3] Additional 3-4,text,true,,186,174,1,1,5,0,0
+1570887289695,0,Random Step2 - Post,Non HTTP response code: java.io.FileNotFoundException,Non HTTP response message: ./postBinary/sample (No such file or directory),[シナリオ3] Additional 3-4,text,false,,2285,0,1,1,0,0,0
+1570887290612,8,Step1 - Get,200,OK,[シナリオ1] Json Get And Post 1-5,text,true,,186,174,1,1,8,0,2
+1570887290620,6,Step2 - Post,200,OK,[シナリオ1] Json Get And Post 1-5,text,true,,181,253,1,1,6,0,0
+1570887290656,8,Step1 - Get,200,OK,[シナリオ2] Binary Data Get And Post 2-5,text,true,,1169,180,1,2,8,0,3
+1570887290665,0,Step2 - Post,Non HTTP response code: java.io.FileNotFoundException,Non HTTP response message: ./postBinary/sample (No such file or directory),[シナリオ2] Binary Data Get And Post 2-5,text,false,,2285,0,1,2,0,0,0
+1570887290664,7,Step1 - Get,200,OK,[シナリオ3] Additional 3-5,text,true,,186,174,1,1,7,0,2
+1570887290672,0,Random Step2 - Post,Non HTTP response code: java.io.FileNotFoundException,Non HTTP response message: ./postBinary/sample (No such file or directory),[シナリオ3] Additional 3-5,text,false,,2285,0,1,1,0,0,0
+1570887290672,7,Step1 - Get,200,OK,[シナリオ3] Additional 3-5,text,true,,186,174,1,1,7,0,2
+1570887290680,5,Random Step1 - Get,200,OK,[シナリオ3] Additional 3-5,text,true,,1169,180,1,1,5,0,0
+1570887290685,5,Step1 - Get,200,OK,[シナリオ3] Additional 3-5,text,true,,186,174,1,1,5,0,0
+1570887290690,1,Random Step2 - Post,Non HTTP response code: java.io.FileNotFoundException,Non HTTP response message: ./postBinary/sample (No such file or directory),[シナリオ3] Additional 3-5,text,false,,2285,0,1,1,0,0,0
+1570887291624,9,Step1 - Get,200,OK,[シナリオ1] Json Get And Post 1-6,text,true,,186,174,1,1,9,0,3
+1570887291633,6,Step2 - Post,200,OK,[シナリオ1] Json Get And Post 1-6,text,true,,181,253,1,1,6,0,0
+1570887291658,8,Step1 - Get,200,OK,[シナリオ2] Binary Data Get And Post 2-6,text,true,,1169,180,1,2,8,0,2
+1570887291666,1,Step2 - Post,Non HTTP response code: java.io.FileNotFoundException,Non HTTP response message: ./postBinary/sample (No such file or directory),[シナリオ2] Binary Data Get And Post 2-6,text,false,,2285,0,1,2,0,0,0
+1570887291664,10,Step1 - Get,200,OK,[シナリオ3] Additional 3-6,text,true,,186,174,1,1,10,0,2
+1570887291674,0,Random Step2 - Post,Non HTTP response code: java.io.FileNotFoundException,Non HTTP response message: ./postBinary/sample (No such file or directory),[シナリオ3] Additional 3-6,text,false,,2285,0,1,1,0,0,0
+1570887291675,9,Step1 - Get,200,OK,[シナリオ3] Additional 3-6,text,true,,186,174,1,1,8,0,2
+1570887291684,0,Random Step2 - Post,Non HTTP response code: java.io.FileNotFoundException,Non HTTP response message: ./postBinary/sample (No such file or directory),[シナリオ3] Additional 3-6,text,false,,2285,0,1,1,0,0,0
+1570887291685,6,Step1 - Get,200,OK,[シナリオ3] Additional 3-6,text,true,,186,174,1,1,6,0,2
+1570887291692,7,Random Step1 - Get,200,OK,[シナリオ3] Additional 3-6,text,true,,1169,180,1,1,7,0,0
+1570887292618,12,Step1 - Get,200,OK,[シナリオ1] Json Get And Post 1-7,text,true,,186,174,1,1,12,0,6
+1570887292630,6,Step2 - Post,200,OK,[シナリオ1] Json Get And Post 1-7,text,true,,181,253,1,1,6,0,0
+1570887292657,8,Step1 - Get,200,OK,[シナリオ2] Binary Data Get And Post 2-7,text,true,,1169,180,1,1,8,0,3
+1570887292665,1,Step2 - Post,Non HTTP response code: java.io.FileNotFoundException,Non HTTP response message: ./postBinary/sample (No such file or directory),[シナリオ2] Binary Data Get And Post 2-7,text,false,,2285,0,1,1,0,0,0
+1570887292681,9,Step1 - Get,200,OK,[シナリオ3] Additional 3-7,text,true,,186,174,1,1,9,0,2
+1570887292690,6,Random Step1 - Get,200,OK,[シナリオ3] Additional 3-7,text,true,,1169,180,1,1,6,0,0
+1570887292696,6,Step1 - Get,200,OK,[シナリオ3] Additional 3-7,text,true,,186,174,1,1,6,0,0
+1570887292702,1,Random Step2 - Post,Non HTTP response code: java.io.FileNotFoundException,Non HTTP response message: ./postBinary/sample (No such file or directory),[シナリオ3] Additional 3-7,text,false,,2285,0,1,1,0,0,0
+1570887292703,8,Step1 - Get,200,OK,[シナリオ3] Additional 3-7,text,true,,186,174,1,1,8,0,3
+1570887292712,5,Random Step1 - Get,200,OK,[シナリオ3] Additional 3-7,text,true,,1169,180,1,1,5,0,0
+1570887293626,9,Step1 - Get,200,OK,[シナリオ1] Json Get And Post 1-8,text,true,,186,174,1,1,9,0,2
+1570887293635,7,Step2 - Post,200,OK,[シナリオ1] Json Get And Post 1-8,text,true,,181,253,1,1,7,0,0
+1570887293659,8,Step1 - Get,200,OK,[シナリオ2] Binary Data Get And Post 2-8,text,true,,1169,180,1,1,8,0,2
+1570887293667,0,Step2 - Post,Non HTTP response code: java.io.FileNotFoundException,Non HTTP response message: ./postBinary/sample (No such file or directory),[シナリオ2] Binary Data Get And Post 2-8,text,false,,2285,0,1,1,0,0,0
+1570887293676,8,Step1 - Get,200,OK,[シナリオ3] Additional 3-8,text,true,,186,174,1,1,8,0,2
+1570887293684,1,Random Step2 - Post,Non HTTP response code: java.io.FileNotFoundException,Non HTTP response message: ./postBinary/sample (No such file or directory),[シナリオ3] Additional 3-8,text,false,,2285,0,1,1,0,0,0
+1570887293685,9,Step1 - Get,200,OK,[シナリオ3] Additional 3-8,text,true,,186,174,1,1,9,0,2
+1570887293694,1,Random Step2 - Post,Non HTTP response code: java.io.FileNotFoundException,Non HTTP response message: ./postBinary/sample (No such file or directory),[シナリオ3] Additional 3-8,text,false,,2285,0,1,1,0,0,0
+1570887293695,7,Step1 - Get,200,OK,[シナリオ3] Additional 3-8,text,true,,186,174,1,1,7,0,2
+1570887293703,5,Random Step1 - Get,200,OK,[シナリオ3] Additional 3-8,text,true,,1169,180,1,1,4,0,0
+1570887294635,9,Step1 - Get,200,OK,[シナリオ1] Json Get And Post 1-9,text,true,,186,174,1,1,9,0,2
+1570887294644,8,Step2 - Post,200,OK,[シナリオ1] Json Get And Post 1-9,text,true,,181,253,1,1,8,0,0
+1570887294659,7,Step1 - Get,200,OK,[シナリオ2] Binary Data Get And Post 2-9,text,true,,1169,180,1,1,7,0,2
+1570887294667,0,Step2 - Post,Non HTTP response code: java.io.FileNotFoundException,Non HTTP response message: ./postBinary/sample (No such file or directory),[シナリオ2] Binary Data Get And Post 2-9,text,false,,2285,0,1,1,0,0,0
+1570887294674,8,Step1 - Get,200,OK,[シナリオ3] Additional 3-9,text,true,,186,174,1,1,8,0,3
+1570887294682,1,Random Step2 - Post,Non HTTP response code: java.io.FileNotFoundException,Non HTTP response message: ./postBinary/sample (No such file or directory),[シナリオ3] Additional 3-9,text,false,,2285,0,1,1,0,0,0
+1570887294684,7,Step1 - Get,200,OK,[シナリオ3] Additional 3-9,text,true,,186,174,1,1,7,0,2
+1570887294691,6,Random Step1 - Get,200,OK,[シナリオ3] Additional 3-9,text,true,,1169,180,1,1,6,0,0
+1570887294697,6,Step1 - Get,200,OK,[シナリオ3] Additional 3-9,text,true,,186,174,1,1,6,0,0
+1570887294703,1,Random Step2 - Post,Non HTTP response code: java.io.FileNotFoundException,Non HTTP response message: ./postBinary/sample (No such file or directory),[シナリオ3] Additional 3-9,text,false,,2285,0,1,1,0,0,0
+1570887295641,8,Step1 - Get,200,OK,[シナリオ1] Json Get And Post 1-10,text,true,,186,174,1,1,8,0,2
+1570887295649,6,Step2 - Post,200,OK,[シナリオ1] Json Get And Post 1-10,text,true,,181,253,1,1,6,0,0
+1570887295658,8,Step1 - Get,200,OK,[シナリオ2] Binary Data Get And Post 2-10,text,true,,1169,180,1,1,8,0,3
+1570887295666,1,Step2 - Post,Non HTTP response code: java.io.FileNotFoundException,Non HTTP response message: ./postBinary/sample (No such file or directory),[シナリオ2] Binary Data Get And Post 2-10,text,false,,2285,0,1,1,0,0,0
+1570887295678,8,Step1 - Get,200,OK,[シナリオ3] Additional 3-10,text,true,,186,174,1,1,8,0,2
+1570887295686,1,Random Step2 - Post,Non HTTP response code: java.io.FileNotFoundException,Non HTTP response message: ./postBinary/sample (No such file or directory),[シナリオ3] Additional 3-10,text,false,,2285,0,1,1,0,0,0
+1570887295687,7,Step1 - Get,200,OK,[シナリオ3] Additional 3-10,text,true,,186,174,1,1,7,0,2
+1570887295695,1,Random Step2 - Post,Non HTTP response code: java.io.FileNotFoundException,Non HTTP response message: ./postBinary/sample (No such file or directory),[シナリオ3] Additional 3-10,text,false,,2285,0,1,1,0,0,0
+1570887295696,7,Step1 - Get,200,OK,[シナリオ3] Additional 3-10,text,true,,186,174,1,1,7,0,2
+1570887295703,6,Random Step1 - Get,200,OK,[シナリオ3] Additional 3-10,text,true,,1169,180,1,1,6,0,0

@@ -1,10 +1,11 @@
 package com.visualpaper.work.deploy.server;
 
-import com.visualpaper.binary.library.core.client.SStorage;
-import com.visualpaper.work.deploy.server.config.sofa.SStorageAwsProvider;
 import com.visualpaper.work.deploy.server.tool.resources.HealthCheckResource;
+import com.visualpaper.work.deploy.server.tool.resources.RestResource;
 import javax.ws.rs.ApplicationPath;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
+import org.glassfish.jersey.jackson.JacksonFeature;
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 
 @ApplicationPath("/")
@@ -17,14 +18,14 @@ public class App extends ResourceConfig {
       @Override
       protected void configure() {
 
-        // Sofa
-        bindFactory(SStorageAwsProvider.class).to(SStorage.class);
-
         // Resources
+        bind(RestResource.class).to(RestResource.class);
         bind(HealthCheckResource.class).to(HealthCheckResource.class);
       }
     };
 
+    register(MultiPartFeature.class);
     register(binder);
+    register(JacksonFeature.class);
   }
 }
