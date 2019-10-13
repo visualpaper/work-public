@@ -15,7 +15,7 @@
 
 ## 構成
 * EC2
-  * ec2-18-182-61-74.ap-northeast-1.compute.amazonaws.com
+  * ec2-3-115-12-156.ap-northeast-1.compute.amazonaws.com
     ※ 22 ポートを空けている (key ファイルを用いて teraterm や winSCP で接続可能)
 <br>
 
