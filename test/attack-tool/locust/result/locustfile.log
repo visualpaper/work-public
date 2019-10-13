@@ -1,0 +1,26 @@
+[2019-10-14 03:26:27,886] umejima-PC/INFO/locust.main: Starting web monitor at *:8089
+[2019-10-14 03:26:27,887] umejima-PC/INFO/locust.main: Starting Locust 0.11.0
+[2019-10-14 03:26:29,668] umejima-PC/INFO/locust.runners: Hatching and swarming 2 clients at the rate 2 clients/s...
+[2019-10-14 03:26:29,673] umejima-PC/DEBUG/urllib3.connectionpool: Starting new HTTP connection (1): umejima-vpc-elb-394473554.ap-northeast-1.elb.amazonaws.com:80
+[2019-10-14 03:26:29,933] umejima-PC/DEBUG/urllib3.connectionpool: http://umejima-vpc-elb-394473554.ap-northeast-1.elb.amazonaws.com:80 "GET /app/rest/get HTTP/1.1" 200 27
+[2019-10-14 03:26:30,176] umejima-PC/DEBUG/urllib3.connectionpool: Starting new HTTP connection (1): umejima-vpc-elb-394473554.ap-northeast-1.elb.amazonaws.com:80
+[2019-10-14 03:26:30,230] umejima-PC/DEBUG/urllib3.connectionpool: http://umejima-vpc-elb-394473554.ap-northeast-1.elb.amazonaws.com:80 "GET /app/rest/get HTTP/1.1" 200 27
+[2019-10-14 03:26:30,670] umejima-PC/INFO/locust.runners: All locusts hatched: RedmineUser: 2
+[2019-10-14 03:26:30,769] umejima-PC/DEBUG/urllib3.connectionpool: http://umejima-vpc-elb-394473554.ap-northeast-1.elb.amazonaws.com:80 "POST /app/rest/post HTTP/1.1" 200 30
+[2019-10-14 03:26:30,979] umejima-PC/DEBUG/urllib3.connectionpool: http://umejima-vpc-elb-394473554.ap-northeast-1.elb.amazonaws.com:80 "POST /app/rest/post HTTP/1.1" 200 30
+[2019-10-14 03:26:31,618] umejima-PC/DEBUG/urllib3.connectionpool: http://umejima-vpc-elb-394473554.ap-northeast-1.elb.amazonaws.com:80 "GET /app/rest/getBinary HTTP/1.1" 200 1000
+[2019-10-14 03:26:31,791] umejima-PC/DEBUG/urllib3.connectionpool: http://umejima-vpc-elb-394473554.ap-northeast-1.elb.amazonaws.com:80 "GET /app/rest/getBinary HTTP/1.1" 200 1000
+[2019-10-14 03:26:32,355] umejima-PC/DEBUG/urllib3.connectionpool: http://umejima-vpc-elb-394473554.ap-northeast-1.elb.amazonaws.com:80 "POST /app/rest/postBinary HTTP/1.1" 200 22
+[2019-10-14 03:26:32,384] umejima-PC/DEBUG/urllib3.connectionpool: http://umejima-vpc-elb-394473554.ap-northeast-1.elb.amazonaws.com:80 "POST /app/rest/postBinary HTTP/1.1" 200 22
+[2019-10-14 03:26:32,918] umejima-PC/DEBUG/urllib3.connectionpool: http://umejima-vpc-elb-394473554.ap-northeast-1.elb.amazonaws.com:80 "GET /app/rest/get HTTP/1.1" 200 27
+[2019-10-14 03:26:33,150] umejima-PC/DEBUG/urllib3.connectionpool: http://umejima-vpc-elb-394473554.ap-northeast-1.elb.amazonaws.com:80 "GET /app/rest/get HTTP/1.1" 200 27
+[2019-10-14 03:26:33,692] umejima-PC/DEBUG/urllib3.connectionpool: http://umejima-vpc-elb-394473554.ap-northeast-1.elb.amazonaws.com:80 "POST /app/rest/post HTTP/1.1" 200 30
+[2019-10-14 03:26:33,854] umejima-PC/DEBUG/urllib3.connectionpool: http://umejima-vpc-elb-394473554.ap-northeast-1.elb.amazonaws.com:80 "POST /app/rest/post HTTP/1.1" 200 30
+[2019-10-14 03:26:34,575] umejima-PC/DEBUG/urllib3.connectionpool: http://umejima-vpc-elb-394473554.ap-northeast-1.elb.amazonaws.com:80 "GET /app/rest/getBinary HTTP/1.1" 200 1000
+[2019-10-14 03:26:34,822] umejima-PC/DEBUG/urllib3.connectionpool: http://umejima-vpc-elb-394473554.ap-northeast-1.elb.amazonaws.com:80 "GET /app/rest/getBinary HTTP/1.1" 200 1000
+[2019-10-14 03:26:35,300] umejima-PC/DEBUG/urllib3.connectionpool: http://umejima-vpc-elb-394473554.ap-northeast-1.elb.amazonaws.com:80 "POST /app/rest/postBinary HTTP/1.1" 200 22
+[2019-10-14 03:26:35,387] umejima-PC/DEBUG/urllib3.connectionpool: http://umejima-vpc-elb-394473554.ap-northeast-1.elb.amazonaws.com:80 "POST /app/rest/postBinary HTTP/1.1" 200 22
+[2019-10-14 03:26:36,069] umejima-PC/DEBUG/urllib3.connectionpool: http://umejima-vpc-elb-394473554.ap-northeast-1.elb.amazonaws.com:80 "GET /app/rest/get HTTP/1.1" 200 27
+[2019-10-14 03:26:36,170] umejima-PC/DEBUG/urllib3.connectionpool: http://umejima-vpc-elb-394473554.ap-northeast-1.elb.amazonaws.com:80 "GET /app/rest/get HTTP/1.1" 200 27
+[2019-10-14 03:26:36,748] umejima-PC/DEBUG/urllib3.connectionpool: http://umejima-vpc-elb-394473554.ap-northeast-1.elb.amazonaws.com:80 "POST /app/rest/post HTTP/1.1" 200 30
+[2019-10-14 03:26:36,749] umejima-PC/DEBUG/urllib3.connectionpool: http://umejima-vpc-elb-394473554.ap-northeast-1.elb.amazonaws.com:80 "POST /app/rest/post HTTP/1.1" 200 30

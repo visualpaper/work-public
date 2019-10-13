@@ -1,0 +1,6 @@
+"Method","Name","# requests","# failures","Median response time","Average response time","Min response time","Max response time","Average Content Size","Requests/s"
+"GET","/app/rest/get",6,0,30,74,27,266,27,0.95
+"GET","/app/rest/getBinary",4,0,27,29,26,33,1000,0.63
+"POST","/app/rest/post",6,0,29,29,25,37,30,0.95
+"POST","/app/rest/postBinary",4,0,27,33,25,48,22,0.63
+"None","Total",20,0,29,43,25,266,221,3.16
