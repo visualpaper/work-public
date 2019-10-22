@@ -1,0 +1,52 @@
+﻿[s3 の挙動として]
+BufferdInputStream でない場合
+ wrap する
+
+com.amazonaws.http.AmazonHttpClient
+    private InputStream buffer(InputStream content) {
+      if (!((InputStream)content).markSupported()) {
+        content = new SdkBufferedInputStream((InputStream)content);
+      }
+
+      return (InputStream)content;
+    }
+
+BufferedInputStream の mark を打つ (https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/RequestClientOptions.html#DEFAULT_STREAM_BUFFER_SIZE)
+※ デフォルト 128KiB
+
+* mark は 0(初期化時の mark) だけで更新されない
+
+[BufferedInputStream そのものの仕様として]
+* STREAM_BUFFER_SIZE を超えた場合は buffer をやめる
+  https://github.com/openjdk-mirror/jdk7u-jdk/blob/master/src/share/classes/java/io/BufferedInputStream.java#L216
+
+  ※ この後に reset がコールされると失敗する
+     > DEFAULT_STREAM_BUFFER_SIZEバイトを読み取った後の再試行は、マーク位置が無効にされているため、基礎となる入力ストリームのリセットに失敗します。
+       ↑の通り。
+
+     https://docs.aws.amazon.com/ja_jp/sdk-for-java/v1/developer-guide/best-practices.html
+     > RequestClientOptions の setReadLimit メソッドを使用して mark の制限を設定できます。デフォルト値は 128 KB です。
+     > 読み取り制限値をストリームのサイズより 1 バイト大きく設定すると、信頼できる方法で ResetException を回避できます。
+     ↑の通り
+
+     > たとえば、ストリームの最大予想サイズが 100,000 バイトである場合、読み取り制限を 100,001 (100,000 + 1) バイトに設定します。
+     > mark と reset は常に 100,000 バイト以下で動作します。これにより、一部のストリームではそのバイト数がメモリにバッファされる場合があることに注意してください。
+     ↑の通り
+
+     検証したが、AWS HttpClient の retry 3 回まで 50M ぐらいでの reset (= 0 pos に戻る) しても問題なかった。3 回を超えると retry 回数オーバーエラーにはなるが。
+
+* 倍々で memory に buffering していく
+  例: 10M -> 20M -> 40M -> ...
+  https://github.com/openjdk-mirror/jdk7u-jdk/blob/master/src/share/classes/java/io/BufferedInputStream.java#L219
+
+* メモリから開放されない
+  もし mark を移動させたり、開放したりしたいなら、自分で作るしかなさそう。(option のようなものは見当たらなかった)
+  ※ GC しても消えないことは確認。
+
+* reset 後は buffer している中から、既に読み込んでいる分を順次読み込み、必要になった際にまた buffer していく
+  https://github.com/openjdk-mirror/jdk7u-jdk/blob/master/src/share/classes/java/io/BufferedInputStream.java#L272
+
+
+結論
+ メモリを buffering できるわけがないと思っているので、この手段では解決できない。
+ 独自でがんばるなど、別の方法を考察すべき
