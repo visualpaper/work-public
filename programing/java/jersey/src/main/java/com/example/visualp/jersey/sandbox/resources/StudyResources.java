@@ -24,4 +24,15 @@ public class StudyResources {
         .noContent()
         .build();
   }
+
+  @Path("bitTransfer")
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response bitTransfer() throws Exception {
+    facade.bitTransfer();
+
+    return Response
+        .noContent()
+        .build();
+  }
 }
