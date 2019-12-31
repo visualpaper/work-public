@@ -11,5 +11,7 @@ class SampleScenario(TaskSequence):
 
 class RedmineUser(HttpLocust):
     task_set = SampleScenario
+
+    # Tast 実行待ち時間 (min, max)
     min_wait = 500
     max_wait = 1000

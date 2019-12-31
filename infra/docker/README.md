@@ -131,6 +131,9 @@ docker container stop <コンテナID>
 docker rm [コンテナID] [コンテナID] ...
 ※ 全コンテナ削除 (docker rm `docker ps -a -q`)
 
+* コンテナの強制削除
+docker rm -f $(docker ps -aq)
+
 * イメージの削除
 docker rmi [イメージID]
 
