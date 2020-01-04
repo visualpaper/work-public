@@ -1,6 +1,8 @@
 from locust import HttpLocust, TaskSet, TaskSequence, task, seq_task
 
 import json
+import random
+from pathlib import Path
 
 class SubTaskSet(TaskSequence):
 
@@ -16,6 +18,29 @@ class SubTaskSet(TaskSequence):
     def on_stop(self):
         self.interrupt()
 
+## Binary 転送 SubTask
+## ※ ランダムで複数ファイルを転送している。
+class BinarySubTaskSet(TaskSequence):
+    UPLOAD_FILES_PATH = Path(__file__).parent / "uploadFiles"
+    UPLOAD_FILENAMES = ["001.jpg", "002.jpg"]
+
+    APPLICATION_OCTET_STREAM_CONTENT_TYPE_HEADER = {"content-type": "application/octet-stream"}
+
+    @seq_task(1)
+    def my_task(self):
+        path = self.UPLOAD_FILES_PATH / self.UPLOAD_FILENAMES[random.randrange(2)]
+
+        with open(path.resolve(), 'rb') as upload_file:
+            self.client.post(
+                "/app/rest/postBinary",
+                data=upload_file,
+                headers=self.APPLICATION_OCTET_STREAM_CONTENT_TYPE_HEADER
+            )
+
+    @seq_task(2)
+    def on_stop(self):
+        self.interrupt()
+
 class SampleScenario(TaskSet):
 
     APPLICATION_JSON_CONTENT_TYPE_HEADER = {"content-type": "application/json"}
@@ -23,7 +48,10 @@ class SampleScenario(TaskSet):
     # 別の TaskSet を含むこともできる。
     # ※ nest task も使ってみたものの、イマイチうまくいかなかったのでこちらの方法をとっている。
     # ※ {class: weight} の指定をしている。order などの指定も可能。
-    tasks = {SubTaskSet: 5}
+    tasks = {
+        SubTaskSet: 5,
+        BinarySubTaskSet: 5
+    }
 
     def on_start(self):
         self._post_id = 1

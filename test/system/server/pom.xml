@@ -127,20 +127,21 @@
     </dependency>
 
     <dependency>
-      <groupId>org.msgpack</groupId>
-      <artifactId>msgpack-core</artifactId>
-      <version>0.8.16</version>
+      <groupId>com.visualpaper.binary.transfer</groupId>
+      <artifactId>binary-transfer</artifactId>
+      <version>0.2.0-SNAPSHOT</version>
     </dependency>
 
     <dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>
-      <version>2.6</version>
+      <groupId>com.visualpaper.binary.library</groupId>
+      <artifactId>binary-library-core</artifactId>
+      <version>0.2.0-SNAPSHOT</version>
     </dependency>
+
     <dependency>
-      <groupId>commons-codec</groupId>
-      <artifactId>commons-codec</artifactId>
-      <version>1.13</version>
+      <groupId>com.visualpaper.binary.library</groupId>
+      <artifactId>binary-library-aws</artifactId>
+      <version>0.2.0-SNAPSHOT</version>
     </dependency>
 
     <dependency>

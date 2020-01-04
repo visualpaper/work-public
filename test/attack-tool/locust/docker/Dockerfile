@@ -8,5 +8,7 @@ RUN    apk update \
     && mkdir /locust
 
 ADD ./senario/senario.py /locust/senario.py
+ADD ./uploadFiles /locust/uploadFiles
+
 EXPOSE 8089 5557 5558
 ENTRYPOINT ["/usr/local/bin/locust", "-f", "/locust/senario.py"]

@@ -1,24 +1,34 @@
 package com.visualpaper.work.deploy.server.tool.resources;
 
+import com.visualpaper.binary.library.core.client.SStorage;
+import com.visualpaper.binary.library.core.client.options.WriteOption;
+import com.visualpaper.binary.library.core.model.content.Content;
+import com.visualpaper.binary.library.core.model.object.Attributes;
+import com.visualpaper.binary.library.core.model.object.Metadata;
+import com.visualpaper.work.binary.transfer.context.upload.UploadBinaryContext;
+import com.visualpaper.work.binary.transfer.filter.BinaryTransfer;
 import com.visualpaper.work.deploy.server.tool.resources.schemas.PostData;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Arrays;
+
 import javax.annotation.Nonnull;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.WebApplicationException;
+import javax.annotation.Nullable;
+import javax.inject.Inject;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
-import org.apache.commons.io.IOUtils;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 @Path("rest")
 public class RestResource {
+
+  @Inject
+  private SStorage storage;
+
+  @Context
+  private UploadBinaryContext uploadBinaryContext;
 
   @POST
   @Path("post")
@@ -31,14 +41,39 @@ public class RestResource {
         .build();
   }
 
+  @BinaryTransfer(type = BinaryTransfer.Type.UPLOAD)
   @POST
   @Path("postBinary")
   @Consumes(MediaType.APPLICATION_OCTET_STREAM)
   @Produces(MediaType.APPLICATION_JSON)
   public Response postBinary(@Nonnull InputStream data) throws Exception {
+    storage.create(
+            Content.from(uploadBinaryContext.getContent()),
+            createMetadata(uploadBinaryContext.getContentType(), uploadBinaryContext.getContentLength()),
+            Attributes.builder()
+                    .label("sampleLabel")
+                    .build(),
+            WriteOption.DEFAULT
+    );
+
     return Response
-        .ok(new PostData(1, String.valueOf(IOUtils.toByteArray(data).length)))
+        .ok(new PostData(1, "aaa"))
         .build();
+  }
+
+  @Nonnull
+  private Metadata.ChangeSet createMetadata(
+          @Nullable String contentType,
+          long contentLength
+  ) {
+    Metadata.ChangeSet.ChangeSetBuilder builder = Metadata.ChangeSet.builder();
+
+    if (contentType != null) {
+      builder.contentType(contentType);
+    }
+    builder.contentLength(contentLength);
+
+    return builder.build();
   }
 
   @GET

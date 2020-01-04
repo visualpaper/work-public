@@ -1,12 +1,17 @@
 package com.visualpaper.work.deploy.server;
 
+import com.visualpaper.binary.library.core.client.SStorage;
+import com.visualpaper.work.binary.transfer.di.BinaryTransferBinder;
+import com.visualpaper.work.binary.transfer.filter.BinaryTransferFilter;
+import com.visualpaper.work.deploy.server.config.SStorageAwsProvider;
 import com.visualpaper.work.deploy.server.tool.resources.HealthCheckResource;
 import com.visualpaper.work.deploy.server.tool.resources.RestResource;
-import javax.ws.rs.ApplicationPath;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
+
+import javax.ws.rs.ApplicationPath;
 
 @ApplicationPath("/")
 public class App extends ResourceConfig {
@@ -18,6 +23,9 @@ public class App extends ResourceConfig {
       @Override
       protected void configure() {
 
+        // Binary-Library 用
+        bindFactory(SStorageAwsProvider.class).to(SStorage.class);
+
         // Resources
         bind(RestResource.class).to(RestResource.class);
         bind(HealthCheckResource.class).to(HealthCheckResource.class);
@@ -27,5 +35,9 @@ public class App extends ResourceConfig {
     register(MultiPartFeature.class);
     register(binder);
     register(JacksonFeature.class);
+
+    // Binary-Transfer 用
+    register(new BinaryTransferBinder());
+    register(BinaryTransferFilter.class);
   }
 }
