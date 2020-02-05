@@ -3,11 +3,6 @@
 ## はじめに
 * ecs-study フォルダ内にある ALB 構築まで実施している状態
 
-## Apache 用意
-* ui フォルダ内の Dockerfile を build
-* 作成した image を `docker run -itd --net=host [イメージId]` で起動
-  ※ 80 ポートをそのまま繋げる必要があるため `--net=host` が必要
-
 ## dd-agent 用意
 
 ```
@@ -30,13 +25,23 @@ docker run -d --name dd-agent \
 ```
 ※ 8125 udp, 8126 tcp ポートを開放 (インバウンドルールに追加)
 
+## Apache 用意
+* ui フォルダ内の Dockerfile を build
+* 作成した image を `docker run -itd --net=host [イメージId]` で起動
+  ※ 80 ポートをそのまま繋げる必要があるため `--net=host` が必要
+
 ## Tomcat 用意
+### data-dog 有り
 * server フォルダ内の server.war / Dockerfile / run.sh ファイルを ec2 へコピーする
 * Dockerfile がある階層で java APM ダウンロード
   > wget -O dd-java-agent.jar 'https://search.maven.org/classic/remote_content?g=com.datadoghq&a=dd-java-agent&v=LATEST'
 
 * Dockerfile を build
 * 作成した image を `docker run -itd -p 7199:7199 -p 8081:8080 --link dd-agent:dd-agent [イメージID]` で起動
+
+### data-dog 無し
+* server フォルダ内の server.war / Dockerfile ファイルを ec2 へコピーする
+* 作成した image を `docker run -itd -p 8081:8080 [イメージID]` で起動
 
 ## 構成
 * EC2
