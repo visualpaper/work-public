@@ -6,6 +6,7 @@ import com.visualpaper.work.binary.transfer.filter.BinaryTransferFilter;
 import com.visualpaper.work.deploy.server.config.SStorageAwsProvider;
 import com.visualpaper.work.deploy.server.tool.resources.HealthCheckResource;
 import com.visualpaper.work.deploy.server.tool.resources.RestResource;
+import com.visualpaper.work.deploy.server.tool.resources.Sample1Resource;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
@@ -29,6 +30,8 @@ public class App extends ResourceConfig {
         // Resources
         bind(RestResource.class).to(RestResource.class);
         bind(HealthCheckResource.class).to(HealthCheckResource.class);
+
+        bind(Sample1Resource.class).to(Sample1Resource.class);
       }
     };
 
