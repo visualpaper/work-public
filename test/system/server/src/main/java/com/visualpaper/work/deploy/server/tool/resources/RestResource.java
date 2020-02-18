@@ -47,14 +47,15 @@ public class RestResource {
   @Consumes(MediaType.APPLICATION_OCTET_STREAM)
   @Produces(MediaType.APPLICATION_JSON)
   public Response postBinary(@Nonnull InputStream data) throws Exception {
-    storage.create(
-            Content.from(uploadBinaryContext.getContent()),
-            createMetadata(uploadBinaryContext.getContentType(), uploadBinaryContext.getContentLength()),
-            Attributes.builder()
-                    .label("sampleLabel")
-                    .build(),
-            WriteOption.DEFAULT
-    );
+    try {
+      storage.create(
+              Content.from(uploadBinaryContext.getContent()),
+              createMetadata(uploadBinaryContext.getContentType(), uploadBinaryContext.getContentLength())
+      );
+    } catch (Exception e) {
+      e.printStackTrace();
+      throw e;
+    }
 
     return Response
         .ok(new PostData(1, "aaa"))

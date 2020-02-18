@@ -34,16 +34,6 @@ public class SStorageAwsProvider implements Factory<SStorage> {
                       .calculateMd5(true)
                       .build()
               )
-              .partialUploadConfiguration(
-                  PartialUploadConfiguration.builder()
-                      .redisConfiguration(
-                          RedisConfiguration.builder()
-                              .redisClient(RedisClient.create("redis://localhost"))
-                              .build()
-                      )
-                      .sessionTtl(3600000L)
-                      .build()
-              )
               .build()
       )
     );
