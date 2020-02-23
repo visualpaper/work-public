@@ -135,13 +135,13 @@
     <dependency>
       <groupId>com.visualpaper.binary.library</groupId>
       <artifactId>binary-library-core</artifactId>
-      <version>0.2.0-SNAPSHOT</version>
+      <version>0.2.1-SNAPSHOT</version>
     </dependency>
 
     <dependency>
       <groupId>com.visualpaper.binary.library</groupId>
       <artifactId>binary-library-aws</artifactId>
-      <version>0.2.0-SNAPSHOT</version>
+      <version>0.2.1-SNAPSHOT</version>
     </dependency>
 
     <dependency>

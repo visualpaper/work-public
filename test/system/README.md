@@ -25,6 +25,9 @@ docker run -d --name dd-agent \
 ```
 ※ 8125 udp, 8126 tcp ポートを開放 (インバウンドルールに追加)
 
+## 起動コンテナをクリアする
+docker rm `docker ps -a -q`
+
 ## Apache 用意
 * ui フォルダ内の Dockerfile を build
 * 作成した image を `docker run -itd --net=host [イメージId]` で起動
