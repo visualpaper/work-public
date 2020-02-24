@@ -45,6 +45,7 @@ docker run -itd -p 7199:7199 -p 8081:8080 --link dd-agent:dd-agent --ulimit="nof
 ## 攻撃サーバ
 ### 起動コンテナをクリアする
 docker rm -f `docker ps -a -q`
+docker images -aq | xargs docker rmi
 
 ### Docker Build
 sudo docker build -t locust-docker-image .

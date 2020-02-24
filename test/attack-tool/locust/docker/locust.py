@@ -4,11 +4,12 @@ from locust.wait_time import constant
 
 from apis.sample2.scenario import BinarySubTaskSet
 from apis.sample3.scenario import BigBinarySubTaskSet
+from apis.sample4.scenario import SuperBigBinarySubTaskSet
 
 class MainScenario(TaskSet):
 
     tasks = {
-        BigBinarySubTaskSet: 1
+        SuperBigBinarySubTaskSet: 1
     }
 
 class HttpLocustUser(FastHttpLocust):
