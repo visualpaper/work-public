@@ -87,18 +87,14 @@ public class RestResource {
   }
 
   @GET
-  @Path("getBinary")
+  @Path("getBinary/{id}")
   @Produces(MediaType.APPLICATION_OCTET_STREAM)
-  public Response getBinary() throws Exception {
-    return Response
-        .ok(new StreamingOutput() {
-          @Override
-          public void write(OutputStream output) throws IOException, WebApplicationException {
-            for (int i = 0; i < 1000; i++) {
-              output.write(i);
-            }
-          }
-        })
-        .build();
+  public Response getBinary(@PathParam("id") String id) throws Exception {
+    try {
+      return Response.ok(storage.get(id).readContent().get()).build();
+    } catch (Exception e) {
+      e.printStackTrace();
+      throw e;
+    }
   }
 }
