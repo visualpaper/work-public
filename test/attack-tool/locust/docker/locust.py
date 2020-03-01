@@ -9,7 +9,7 @@ from apis.sample4.scenario import SuperBigBinarySubTaskSet
 class MainScenario(TaskSet):
 
     tasks = {
-        SuperBigBinarySubTaskSet: 1
+        BigBinarySubTaskSet: 1
     }
 
 class HttpLocustUser(FastHttpLocust):

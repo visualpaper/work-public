@@ -1,5 +1,6 @@
 package com.visualpaper.work.deploy.server.config.aws;
 
+import com.amazonaws.ClientConfiguration;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
@@ -17,6 +18,9 @@ public class S3ConfigurationProvider {
     AmazonS3 client = AmazonS3ClientBuilder.standard()
         .withRegion(Regions.AP_NORTHEAST_1)
         .withCredentials(new AWSStaticCredentialsProvider(AwsCredentialsProvider.provide()))
+        .withClientConfiguration(
+                new ClientConfiguration().withMaxConnections(500)
+        )
         .build();
 
     return S3Configuration.builder()

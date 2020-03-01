@@ -5,8 +5,11 @@ WORKDIR /usr/local/tomcat/bin
 COPY run.sh run.sh
 RUN chmod +x run.sh
 
-#Copy war file
+# Copy war file
 ADD ./server.war /usr/local/tomcat/webapps/
+
+# Copy setting file
+COPY ./server.xml /usr/local/tomcat/conf/server.xml
 
 # Expose ports
 EXPOSE 7199 8126
