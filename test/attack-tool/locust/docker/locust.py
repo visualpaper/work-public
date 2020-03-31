@@ -6,11 +6,12 @@ from apis.sample2.scenario import BinarySubTaskSet
 from apis.sample3.scenario import BigBinarySubTaskSet
 from apis.sample4.scenario import SuperBigBinarySubTaskSet
 from apis.sample5.scenario import BigBinaryDownloadSubTaskSet
+from apis.sample6.scenario import BufferBigBinarySubTaskSet
 
 class MainScenario(TaskSet):
 
     tasks = {
-        BigBinaryDownloadSubTaskSet: 1
+        BufferBigBinarySubTaskSet: 1
     }
 
 class HttpLocustUser(FastHttpLocust):

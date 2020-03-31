@@ -24,7 +24,7 @@ docker run -d --name dd-agent \
   -e DD_DOGSTATSD_NON_LOCAL_TRAFFIC=true \
   -e SD_JMX_ENABLE=true \
   -e SD_BACKEND=docker \
-  -e DD_API_KEY=ce425dc3e5cbf255273b9dfbd258a7d1 \
+  -e DD_API_KEY=ed7960cae2f7c7e1134754f8e8b2e8de \
   -p 8125:8125/udp \
   -p 8126:8126/tcp \
   datadog/agent:latest-jmx
