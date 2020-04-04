@@ -2,7 +2,7 @@ from locust import TaskSet, task
 
 from actions.get_rest_action import GetRestAction
 
-class GetRestSubTaskSet(TaskSet):
+class Scenario1SubTaskSet(TaskSet):
 
     def on_start(self):
         self._action = GetRestAction(self.client)

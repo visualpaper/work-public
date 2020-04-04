@@ -110,14 +110,13 @@ sudo docker run -itd locust-docker-image --slave --logfile ./locustfile.log --ma
 
 ## DataDog
 
+```
 system.cpu.user: CPUがユーザー空間プロセスの実行に費やした時間の割合(パーセント)
 system.cpu.system: CPUがカーネルの実行に費やした時間の割合(パーセント)
-system.mem.total: 物理RAMの総量(バイト)
 system.mem.used: 使用中のRAMの量(バイト)
 system.mem.free: 空きRAMの量(バイト)
 ※ https://docs.datadoghq.com/ja/integrations/system/
 
-system.disk.total: ディスク容量の合計(バイト)
 system.disk.used: 使用中のディスク容量(バイト)
 system.disk.free: 空きディスク容量(バイト)
 ※ https://docs.datadoghq.com/ja/integrations/disk/
@@ -130,5 +129,5 @@ jvm.heap_memory: 使用されたJavaヒープメモリの合計(バイト)
 jvm.non_heap_memory: 使用されているJava非ヒープメモリの合計(バイト)
 jvm.gc.major_collection_count: 発生した主要なガベージコレクションの数
 jvm.gc.minor_collection_count: 発生したマイナーガベージコレクションの数
-jvm.gc.cms.count: 発生したガベージコレクションの総数
 ※ https://docs.datadoghq.com/ja/tracing/runtime_metrics/java/
+```
