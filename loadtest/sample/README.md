@@ -130,4 +130,8 @@ jvm.non_heap_memory: 使用されているJava非ヒープメモリの合計(バ
 jvm.gc.major_collection_count: 発生した主要なガベージコレクションの数
 jvm.gc.minor_collection_count: 発生したマイナーガベージコレクションの数
 ※ https://docs.datadoghq.com/ja/tracing/runtime_metrics/java/
+
+tomcat.thread.busy: 使用中のスレッドの数
+tomcat.thread.count: スレッドプールによって管理されるスレッドの数
+※ https://docs.datadoghq.com/ja/integrations/tomcat/
 ```
