@@ -12,7 +12,7 @@ from apis.sample6.scenario import BufferBigBinarySubTaskSet
 class MainScenario(TaskSet):
 
     tasks = {
-        Scenario2SubTaskSet: 1
+        Scenario1SubTaskSet: 1
     }
 
 class HttpLocustUser(FastHttpLocust):

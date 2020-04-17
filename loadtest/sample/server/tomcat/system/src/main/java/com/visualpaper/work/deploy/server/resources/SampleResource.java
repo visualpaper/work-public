@@ -58,6 +58,8 @@ public class SampleResource {
   @Path("get")
   @Produces(MediaType.APPLICATION_JSON)
   public Response get() throws Exception {
+
+    Thread.sleep(50000);
     return Response
         .ok(new PostData(1, "aaaaaaaa"))
         .build();
