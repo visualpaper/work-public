@@ -134,4 +134,8 @@ jvm.gc.minor_collection_count: 発生したマイナーガベージコレクシ�
 tomcat.thread.busy: 使用中のスレッドの数
 tomcat.thread.count: スレッドプールによって管理されるスレッドの数
 ※ https://docs.datadoghq.com/ja/integrations/tomcat/
+
+apache.performance.busy_workers: リクエストを処理するスレッド数
+apache.performance.idle_workers: アイドル状態のスレッド数
+※ https://docs.datadoghq.com/ja/integrations/apache/
 ```
