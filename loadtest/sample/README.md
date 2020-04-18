@@ -108,6 +108,18 @@ sudo docker run -itd locust-docker-image --slave --logfile ./locustfile.log --ma
 > watch -d -n 1 "cat /proc/net/dev"
 ※ 10 列目の値が転送バイト
 
+## Apache
+
+http://umejima-vpc-elb-394473554.ap-northeast-1.elb.amazonaws.com/server-status
+
+## Tomcat
+
+```
+ps aux | grep java
+cd /proc/xxx/task
+watch -n 1 'ls -l|wc -l'
+```
+
 ## DataDog
 
 ```
