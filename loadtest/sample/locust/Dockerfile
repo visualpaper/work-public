@@ -3,7 +3,7 @@ FROM python:3.7-alpine3.9
 RUN    apk update \
     && apk --no-cache add --virtual=.build-dep build-base libffi-dev git \
     && apk --no-cache add zeromq-dev \
-    && python3 -m pip install locustio  \
+    && python3 -m pip install locustio==0.14.2  \
     && apk del .build-dep \
     && mkdir /locust
 
