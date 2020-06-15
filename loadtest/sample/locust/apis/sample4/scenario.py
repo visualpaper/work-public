@@ -1,6 +1,6 @@
 from locust import TaskSet, task
 
-from actions.postbinary import PostBinaryAction
+from actions.post_binary_action import PostBinaryAction
 
 import json
 import random

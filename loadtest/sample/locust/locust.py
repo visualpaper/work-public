@@ -1,6 +1,6 @@
 from locust import TaskSet
 from locust.contrib.fasthttp import FastHttpLocust
-from locust.wait_time import constant
+from locust.wait_time import constant_pacing
 
 from apis.scenario1.scenario import Scenario1SubTaskSet
 from apis.scenario2.scenario import Scenario2SubTaskSet
@@ -12,11 +12,11 @@ from apis.sample6.scenario import BufferBigBinarySubTaskSet
 class MainScenario(TaskSet):
 
     tasks = {
-        Scenario1SubTaskSet: 1
+        Scenario2SubTaskSet: 1
     }
 
 class HttpLocustUser(FastHttpLocust):
     task_set = MainScenario
 
-    # Tast 実行待ち時間 (min, max)
-    wait_time = constant(1)
+    # Tast 実行待ち時間
+    wait_time = constant_pacing(1)

@@ -30,8 +30,18 @@
   `* soft nofile 65536`
   `* hard nofile 65536`
 
+※ ↑だけでは不十分で、/etc/security/ 配下に存在するファイルも変更する必要がある
+
+> sudo vi /etc/security/limits.d/20-nproc.conf
+  `* soft nofile 65536`
+  `* hard nofile 65536`
+
 ### 起動コンテナをクリアする
 docker rm -f `docker ps -a -q`
+
+※ dd-agent 用ポートが解放されていない場合、以下コマンド実施
+   > sudo lsof -i -P | grep "LISTEN"
+   > sudo kill {dd-agent 関連 pid}
 
 ### dd-agent 起動 (DataDog 有版)
 docker run -d --name dd-agent \
@@ -46,14 +56,14 @@ docker run -d --name dd-agent \
   -e DD_DOGSTATSD_NON_LOCAL_TRAFFIC=true \
   -e SD_JMX_ENABLE=true \
   -e SD_BACKEND=docker \
-  -e DD_API_KEY=de50e2046291eccd9b2086158afb98c3 \
+  -e DD_API_KEY=f5cc8334488af958edef136630000843 \
   -p 8125:8125/udp \
   -p 8126:8126/tcp \
   datadog/agent:latest-jmx
 ※ 8125 udp, 8126 tcp ポートを開放 (インバウンドルールに追加)
-※ ポートが解放されていない場合、docker image 削除し以下コマンド実施
-   > sudo lsof -i -P | grep "LISTEN"
-   > sudo kill {dd-agent 関連 pid}
+
+### Stress 起動 (必要あれば)
+docker run -itd {イメージID}
 
 ### Apache 起動
 docker run -itd --net=host --ulimit="nofile=65536" {イメージID}
@@ -68,6 +78,11 @@ wget -O dd-java-agent.jar 'https://search.maven.org/classic/remote_content?g=com
 docker run -itd -p 7199:7199 -p 8081:8080 --link dd-agent:dd-agent --ulimit="nofile=65536" {イメージID}
 
 ## 攻撃サーバ
+### 初期構築
+
+sudo yum update -y
+sudo yum install -y docker
+
 ### 起動コンテナをクリアする
 docker rm -f `docker ps -a -q`
 docker images -aq | xargs docker rmi
@@ -76,13 +91,13 @@ docker images -aq | xargs docker rmi
 sudo docker build -t locust-docker-image .
 
 ### Master
-sudo docker run --name master -itd -p 8089:8089 -p 5557:5557 -p 5558:5558 locust-docker-image --master
+sudo docker run --name master -itd -p 8089:8089 -p 5557:5557 -p 5558:5558 --ulimit="nofile=65536" locust-docker-image --master
 
 ### Slave
-sudo docker run --link master -itd locust-docker-image --slave --master-host=master --logfile ./locustfile.log
+sudo docker run --link master -itd --ulimit="nofile=65536" locust-docker-image --slave --master-host=master --logfile ./locustfile.log
 
 ### Slave (別マシン)
-sudo docker run -itd locust-docker-image --slave --logfile ./locustfile.log --master-host=${Master Host IP Address}
+sudo docker run --ulimit="nofile=65536" -itd locust-docker-image --slave --logfile ./locustfile.log --master-host=${Master Host IP Address}
 
 # メトリクス
 ## CPU コマンド
@@ -106,18 +121,47 @@ sudo docker run -itd locust-docker-image --slave --logfile ./locustfile.log --ma
 
 * ネットワーク送信量
 > watch -d -n 1 "cat /proc/net/dev"
-※ 10 列目の値が転送バイト
+awk '$1=="eth0:\" {printf \"rx: %fMB tx: %fMB\n\", $2/1024/1024, $10/1024/1024}\' < /proc/net/dev"
+
+※ Reviece が受信、Transmit が送信。転送バイト数がわかる。
+※ 以下 shell で秒間で確認可能
+
+```
+while :
+do
+  A=`date ; awk '$1=="eth0:" {printf "rx: %fMB tx: %fMB\n", $2/1024/1024, $10/1024/1024}' < /proc/net/dev`
+  echo $A
+  sleep 1
+done
+```
 
 ## Apache
 
-http://umejima-vpc-elb-394473554.ap-northeast-1.elb.amazonaws.com/server-status
+```
+[スレッド数]
+watch -n 1 'curl -sS http://localhost/server-status | head -n 30'
+※ スレッド数以外は参考にしないほうが良い。サーバ稼働中の間の集計結果が表示されているので微妙に使えない
+
+[各種リミット]
+ps aux |grep httpd
+cat /proc/xxx/limit
+
+```
 
 ## Tomcat
 
 ```
+[スレッド数]
 ps aux | grep java
 cd /proc/xxx/task
 watch -n 1 'ls -l|wc -l'
+
+[各種リミット]
+ps aux | grep java
+cat /proc/xxx/limit
+
+※ 変更するには、LimitNOFILE=8192 を [Service] 配下に記載してあげる必要がある。
+   (https://www.malasuk.com/linux/increase-open-file-limit-tomcat-centos-7/)
 ```
 
 ## DataDog
