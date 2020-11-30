@@ -1,0 +1,53 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: stack for lambda function(development) - sofa-worker
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  UamsearchRelationsupdater01:
+    Type: AWS::Serverless::Function
+    Properties:
+      # note: FunctionName must be within 64 char length.
+      FunctionName: umejima-migration-lambda
+      Description: lambda function for migration
+
+      # Handler:
+      Handler: main.lambda_handler
+      Runtime: python3.6
+
+      # CodeUri:
+      CodeUri: s3://k-umejima-bucket/main.zip
+      Role: arn:aws:iam::683640743654:role/k-umejima-role-migration-lambda
+      MemorySize: 512
+      Timeout: 300
+
+      # parameters
+      Environment:
+        Variables:
+          RETRY_COUNT: 1
+
+      Tracing: Active
+      Events:
+        Stream:
+          Type: DynamoDB
+          Properties:
+            Stream: arn:aws:dynamodb:ap-northeast-1:683640743654:table/umejima-lambda-stream/stream/2020-11-15T04:27:35.286
+
+            # テーブルの更新ストリームから一度に読み取るレコードの最大数 (デフォルト 100。最大 1,000)
+            BatchSize: 100
+
+            # シャード内で最も古いレコードである最後の（トリミングされていない）ストリームレコードから読み取りを開始
+            StartingPosition: TRIM_HORIZON
+
+            # 関数がエラーを返した場合は、バッチを 2 つに分割して再試行します。デフォルト値は false
+            #BisectBatchOnFunctionError: False
+
+            # 指定した経過期間よりも古いレコードを破棄します。デフォルト値は無制限 (-1) です。
+            #MaximumRecordAgeInSeconds: -1
+
+            # 指定した再試行数の後でレコードを破棄します。デフォルト値は無制限 (-1) です。無制限 (-1) に設定すると、失敗したレコードはレコードの有効期限が切れるまで再試行されます。
+            #MaximumRetryAttempts: -1
+
+            # 廃棄されたレコードの Amazon SQS キューまたは Amazon SNS トピックの送信先。
+            #DestinationConfig:
+            #  OnFailure:
+            #    Type: SQS
+            #    Destination: {sqs arn}

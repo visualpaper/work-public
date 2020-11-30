@@ -1,0 +1,13 @@
+pytest
+pytest-cov
+pytest-mock
+pytest-xdist
+moto
+flake8
+xenon
+
+# These should be installed only to local env.
+#tox
+#black
+#mypy
+#pylint

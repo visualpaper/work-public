@@ -1,0 +1,54 @@
+{
+    "Records": [
+        {
+            "eventID": "81fc3a7c98f08466f38d53925262b4c9",
+            "eventName": "MODIFY",
+            "eventVersion": "1.1",
+            "eventSource": "aws:dynamodb",
+            "awsRegion": "ap-northeast-1",
+            "dynamodb": {
+                "ApproximateCreationDateTime": 1605418284.0,
+                "Keys": {
+                    "a": {
+                        "S": "AAA"
+                    },
+                    "b": {
+                        "N": "1"
+                    }
+                },
+                "NewImage": {
+                    "a": {
+                        "S": "AAA"
+                    },
+                    "b": {
+                        "N": "1"
+                    },
+                    "c": {
+                        "S": "CCC2"
+                    },
+                    "g": {
+                        "S": "BBB"
+                    }
+                },
+                "OldImage": {
+                    "a": {
+                        "S": "AAA"
+                    },
+                    "b": {
+                        "N": "1"
+                    },
+                    "c": {
+                        "S": "CCC"
+                    },
+                    "g": {
+                        "S": "BBB"
+                    }
+                },
+                "SequenceNumber": "4800000000008793295384",
+                "SizeBytes": 38,
+                "StreamViewType": "NEW_AND_OLD_IMAGES"
+            },
+            "eventSourceARN": "arn:aws:dynamodb:ap-northeast-1: 683640743654:table/umejima-lambda-stream/stream/2020-11-15T04: 27: 35.286"
+        }
+    ]
+}

@@ -1,0 +1,33 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: stack for lambda function(development) - sofa-worker
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  UamsearchRelationsupdater01:
+    Type: AWS::Serverless::Function
+    Properties:
+      # note: FunctionName must be within 64 char length.
+      FunctionName: umejima-migration-lambda
+      Description: lambda function for migration
+
+      # Handler:
+      Handler: main.lambda_handler
+      Runtime: python3.6
+
+      # CodeUri:
+      CodeUri: s3://k-umejima-bucket/main.zip
+      Role: arn:aws:iam::683640743654:role/k-umejima-role-migration-lambda
+      MemorySize: 512
+      Timeout: 300
+
+      # parameters
+      Environment:
+        Variables:
+          RETRY_COUNT: 1
+
+      Tracing: Active
+      Events:
+        Stream:
+          Type: DynamoDB
+          Properties:
+            Stream: arn:aws:dynamodb:ap-northeast-1:683640743654:table/umejima-lambda-stream/stream/2020-11-15T04:27:35.286
+            StartingPosition: TRIM_HORIZON
