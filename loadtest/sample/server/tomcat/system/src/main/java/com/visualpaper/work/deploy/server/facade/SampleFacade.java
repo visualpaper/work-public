@@ -17,14 +17,16 @@ public class SampleFacade {
   /**
    * post binary.
    */
-  public void postBinary(
+  @Nonnull
+  public String postBinary(
       @Nonnull InputStream is,
       @Nullable String contentType,
       long contentLength
   ) throws Exception {
 
+    SObject sObject;
     try {
-      storage.create(
+      sObject = storage.create(
           Content.from(is),
           createMetadata(contentType, contentLength)
       );
@@ -32,6 +34,7 @@ public class SampleFacade {
       e.printStackTrace();
       throw e;
     }
+    return sObject.getObjectId();
   }
 
   @Nonnull
@@ -57,5 +60,11 @@ public class SampleFacade {
       throw new Exception("not found");
     }
     return sObject.readContent().get();
+  }
+
+  public void deleteBinary(@Nonnull String id) throws Exception {
+    SObject sObject = storage.get(id);
+
+    sObject.delete();
   }
 }

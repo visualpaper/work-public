@@ -1,4 +1,4 @@
-FROM python:3.7-alpine3.9
+FROM python:3.6-alpine
 
 RUN    apk update \
     && apk --no-cache add --virtual=.build-dep build-base libffi-dev git \
