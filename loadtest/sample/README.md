@@ -66,10 +66,10 @@ docker run -d --name dd-agent \
 docker run -itd {イメージID}
 
 ### Apache 起動
-docker run -itd --net=host --ulimit="nofile=65536" {イメージID}
+docker run -itd --net=host --ulimit nofile=65536:65536 --ulimit nproc=65536:65536 {イメージID}
 
 ### Tomcat 起動
-docker run -itd -p 8081:8080 --ulimit="nofile=65536" {イメージID}
+docker run -itd -p 8081:8080 --ulimit nofile=65536:65536 --ulimit nproc=65536:65536 {イメージID}
 
 ### Java AMP 取得 (DataDog 有版)
 wget -O dd-java-agent.jar 'https://search.maven.org/classic/remote_content?g=com.datadoghq&a=dd-java-agent&v=LATEST'
