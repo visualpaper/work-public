@@ -18,6 +18,11 @@ public class S3ConfigurationProvider {
     AmazonS3 client = AmazonS3ClientBuilder.standard()
         .withRegion(Regions.AP_NORTHEAST_1)
         .withCredentials(new AWSStaticCredentialsProvider(AwsCredentialsProvider.provide()))
+        .withClientConfiguration(
+            new ClientConfiguration()
+                .withMaxConnections(512)
+                .withTcpKeepAlive(true)
+        )
         .build();
 
     return S3Configuration.builder()
