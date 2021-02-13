@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-web-deployment
+  labels:
+    app: sample-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: sample-app
+  template:
+    metadata:
+      name: sample-web-app
+      labels:
+        app: sample-app
+    spec:
+      containers:
+      # Dockerコンテナ名
+      - name: web-container
+        # 利用するDockerイメージ
+        image: php:7.0-apache
+        # コンテナ内のport
+        ports:
+          - name: http-port
+            containerPort: 80
+        # mountするディレクトリ：コンテナ側の設定
+        volumeMounts:
+          - name: documentroot
+            mountPath: /var/www/html
+    # mountするディレクトリ：ホストOS側の設定
+      volumes:
+        - name: documentroot
+          hostPath:
+            path: /home/username/containers/web/html
+---
+kind: Service
+apiVersion: v1
+metadata:
+  # service名
+  name: http-service
+  labels:
+    app: sample-app
+spec:
+  type: LoadBalancer
+  selector:
+    app: sample-app
+  # 公開するport
+  ports:
+    - name: "http-port"
+      protocol: "TCP"
+      port: 80
+      targetPort: http-port
+
