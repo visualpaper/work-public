@@ -1,8 +1,8 @@
-package com.example.visualp.system010;
+package com.example.visualp.system213;
 
-import com.example.visualp.system010.facade.StudyFacade;
-import com.example.visualp.system010.facade.impl.StudyFacadeImpl;
-import com.example.visualp.system010.resources.StudyResources;
+import com.example.visualp.system213.dao.SampleDAO;
+import com.example.visualp.system213.facade.StudyFacade;
+import com.example.visualp.system213.resources.StudyResources;
 import javax.ws.rs.ApplicationPath;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -20,8 +20,11 @@ public class App extends ResourceConfig {
       @Override
       protected void configure() {
 
+        // Dao
+        bind(SampleDAO.class).to(SampleDAO.class);
+
         // Facade
-        bind(StudyFacadeImpl.class).to(StudyFacade.class);
+        bind(StudyFacade.class).to(StudyFacade.class);
 
         // Resources
         bind(StudyResources.class).to(StudyResources.class);
