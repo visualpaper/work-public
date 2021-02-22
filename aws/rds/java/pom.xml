@@ -11,7 +11,7 @@
   <name>system213</name>
 
   <build>
-    <finalName>system213</finalName>
+    <finalName>server</finalName>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
