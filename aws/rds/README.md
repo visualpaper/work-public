@@ -5,7 +5,8 @@
 * サブネット/セキュリティグループ設定をミスると繋がらないので注意
   (パブリックアクセスを許可すると別 VPC でもアクセス可能)
 
-* リードレプリカは後から追加できる。マスタは "プライマリ"、リードレプリカは "レプリカ" と表示される。
+* リードレプリカは後から追加できる。
+  ※ マスタは "プライマリ"、リードレプリカは "レプリカ" と表示される。
   (リードレプリカも同様に Endpoint が払い出される)
 
 * マイナーバージョンの自動更新にチェックを付けると特定タイミングで勝手に更新される
@@ -31,6 +32,7 @@ mysql -h umejima-mysql.cbnnayxzw8fz.ap-northeast-1.rds.amazonaws.com -u admin -p
 
 ## DB 作成 (サンプル)
 
+```
 CREATE DATABASE storage;
 USE storage;
 CREATE TABLE sample(
@@ -43,44 +45,47 @@ DESC sample;
 
 INSERT INTO sample(id, value) VALUES (1, "aaa");
 INSERT INTO sample(id, value) VALUES (2, "bbb");
-
+```
 
 # Apache
 
 ## インストール
 
-yum -y install httpd
+* yum -y install httpd
 
 ## Apache 起動
 
-service httpd start
+* service httpd start
 
 
 # Java
 ## インストール
 
-yum -y install java-1.8.0-openjdk-devel
+* yum -y install java-1.8.0-openjdk-devel
 
 ## JAVA_HOME 設定
-echo "export JAVA_HOME=$(readlink -e $(which java)|sed 's:/bin/java::')" > /etc/profile.d/java.sh
-echo "PATH=\$PATH:\$JAVA_HOME/bin" >> /etc/profile.d/java.sh
-source /etc/profile
+
+* echo "export JAVA_HOME=$(readlink -e $(which java)|sed 's:/bin/java::')" > /etc/profile.d/java.sh
+* echo "PATH=\$PATH:\$JAVA_HOME/bin" >> /etc/profile.d/java.sh
+* source /etc/profile
 
 
 # Tomcat
 ## ユーザ作成
-useradd -s /sbin/nologin tomcat
+
+* useradd -s /sbin/nologin tomcat
 
 ## セットアップ
 
-curl -O http://ftp.yz.yamagata-u.ac.jp/pub/network/apache/tomcat/tomcat-9/v9.0.43/bin/apache-tomcat-9.0.43.tar.gz
-tar xvzf apache-tomcat-9.0.43.tar.gz -C /opt
-ln -s /opt/apache-tomcat-9.0.43 /opt/apache-tomcat
-chown -R tomcat:tomcat /opt/apache-tomcat-9.0.43
+* curl -O http://ftp.yz.yamagata-u.ac.jp/pub/network/apache/tomcat/tomcat-9/v9.0.43/bin/apache-tomcat-9.0.43.tar.gz
+* tar xvzf apache-tomcat-9.0.43.tar.gz -C /opt
+* ln -s /opt/apache-tomcat-9.0.43 /opt/apache-tomcat
+* chown -R tomcat:tomcat /opt/apache-tomcat-9.0.43
 
 ## CATALINA_HOME 設定
-echo "export CATALINA_HOME=/opt/apache-tomcat" > /etc/profile.d/tomcat.sh
-source /etc/profile
+
+* echo "export CATALINA_HOME=/opt/apache-tomcat" > /etc/profile.d/tomcat.sh
+* source /etc/profile
 
 ## tomcat.service 作成
 
@@ -106,7 +111,7 @@ WantedBy=multi-user.target
 
 ## tomcat 起動
 
-sudo service tomcat start
+* sudo service tomcat start
 
 # APP 配置
 ## apache
