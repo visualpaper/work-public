@@ -30,21 +30,45 @@ mysql -h umejima-mysql.cbnnayxzw8fz.ap-northeast-1.rds.amazonaws.com -u admin -p
 ```
 
 
-## DB 作成 (サンプル)
+## DB 作成
 
 ```
 CREATE DATABASE storage;
 USE storage;
-CREATE TABLE sample(
-  id INT(11) NOT NULL, 
-  value VARCHAR(30) NOT NULL,
+
+CREATE TABLE master_table (
+  id INT(11) AUTO_INCREMENT NOT NULL, 
+  name VARCHAR(512) NOT NULL,
+  create_date datetime NOT NULL,
+  update_date datetime NOT NULL,
   PRIMARY KEY (id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DESC sample;
+CREATE TABLE trun_number_table (
+  id INT(11) AUTO_INCREMENT NOT NULL, 
+  master_id INT(11) NOT NULL, 
+  big_int_value BIGINT(20) DEFAULT NULL,
+  tyny_int_value TINYINT(4) DEFAULT NULL,
+  small_int_value SMALLINT(6) DEFAULT NULL,
+  small_int_unsigned_value SMALLINT(6) unsigned DEFAULT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO sample(id, value) VALUES (1, "aaa");
-INSERT INTO sample(id, value) VALUES (2, "bbb");
+CREATE TABLE trun_string_table (
+  id INT(11) AUTO_INCREMENT NOT NULL, 
+  master_id INT(11) NOT NULL, 
+  var_char_value VARCHAR(32) binary DEFAULT NULL,
+  var_binary_value VARBINARY(10) DEFAULT NULL,
+  medium_blob_value MEDIUMBLOB DEFAULT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+INSERT INTO master_table(id, name, create_date, update_date) VALUES (1, "aaa", now(), now());
+INSERT INTO master_table(id, name, create_date, update_date) VALUES (2, "bbb", now(), now());
+INSERT INTO master_table(id, name, create_date, update_date) VALUES (3, "ccc", now(), now());
+INSERT INTO master_table(id, name, create_date, update_date) VALUES (4, "ddd", now(), now());
+INSERT INTO master_table(id, name, create_date, update_date) VALUES (5, "eee", now(), now());
 ```
 
 # Apache
